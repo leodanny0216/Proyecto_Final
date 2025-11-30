@@ -1,20 +1,18 @@
 package edu.ucne.proyecto_final.presentation.navegation
 
-
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import edu.ucne.proyecto_final.presentation.usuario.CrearUsuarioScreen
-import edu.ucne.proyecto_final.presentation.usuario.EditarUsuarioScreen
-import edu.ucne.proyecto_final.presentation.usuario.LoginScreen
-import edu.ucne.proyecto_final.presentation.usuario.MenuScreen
-import edu.ucne.proyecto_final.presentation.usuario.PerfilScreen
-import edu.ucne.proyecto_final.presentation.usuario.RegisterScreen
-import edu.ucne.proyecto_final.presentation.usuario.StartScreen
-import edu.ucne.proyecto_final.presentation.usuario.UsuarioViewModel
-import edu.ucne.proyecto_final.presentation.usuario.UsuariosScreen
+import edu.ucne.proyecto_final.presentation.usuario.*
+import edu.ucne.proyecto_final.presentation.categoria.*
+import edu.ucne.proyecto_final.presentation.cliente.*
+import edu.ucne.proyecto_final.presentation.proveedor.*
+import edu.ucne.proyecto_final.presentation.compra.*
+import edu.ucne.proyecto_final.presentation.insumo.*
+import edu.ucne.proyecto_final.presentation.reclamo.*
 
 @Composable
 fun AppNavigation() {
@@ -25,7 +23,7 @@ fun AppNavigation() {
         startDestination = Screen.StartScreen
     ) {
 
-        // Pantalla de Inicio (Splash)
+        // ==================== USUARIO ====================
         composable<Screen.StartScreen> {
             StartScreen(
                 onSplashComplete = {
@@ -36,7 +34,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla de Login
         composable<Screen.LoginScreen> {
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
             LoginScreen(
@@ -53,7 +50,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla de Registro
         composable<Screen.RegisterScreen> {
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
             RegisterScreen(
@@ -72,16 +68,19 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla de Menú Principal
         composable<Screen.Menu> { backStackEntry ->
-            // Obtener el usuarioId de los argumentos
             val usuarioId = backStackEntry.arguments?.getString("usuarioId")?.toIntOrNull()
             MenuScreen(
                 usuarioId = usuarioId,
                 onMenuItemClick = { route ->
                     when (route) {
                         "usuarios" -> navController.navigate(Screen.UsuariosScreen)
-                        // Aquí puedes agregar más rutas según tus necesidades
+                        "categorias" -> navController.navigate(Screen.CategoriaScreen)
+                        "clientes" -> navController.navigate(Screen.ClienteScreen)
+                        "proveedores" -> navController.navigate(Screen.ProveedorListScreen)
+                        "compras" -> navController.navigate(Screen.CompraListScreen)
+                        "insumos" -> navController.navigate(Screen.InsumoListScreen)
+                        "reclamos" -> navController.navigate(Screen.ReclamoListScreen)
                     }
                 },
                 onNavigateToPerfil = { userId ->
@@ -95,7 +94,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla de Perfil
         composable<Screen.Perfil> { backStackEntry ->
             val usuarioId = backStackEntry.arguments?.getString("usuarioId")?.toIntOrNull() ?: 0
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
@@ -106,7 +104,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla de Lista de Usuarios
         composable<Screen.UsuariosScreen> {
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
             UsuariosScreen(
@@ -121,7 +118,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla para Crear Usuario
         composable<Screen.CrearUsuario> {
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
             CrearUsuarioScreen(
@@ -135,7 +131,6 @@ fun AppNavigation() {
             )
         }
 
-        // Pantalla para Editar Usuario
         composable<Screen.EditarUsuario> { backStackEntry ->
             val usuarioId = backStackEntry.arguments?.getString("usuarioId")?.toIntOrNull() ?: 0
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
@@ -153,6 +148,180 @@ fun AppNavigation() {
                         popUpTo(Screen.UsuariosScreen) { inclusive = true }
                     }
                 }
+            )
+        }
+
+        // ==================== CATEGORÍA ====================
+        composable<Screen.CategoriaScreen> {
+            CategoriaScreen()
+        }
+
+        // ==================== CLIENTE ====================
+        composable<Screen.ClienteScreen> {
+            ClienteScreen()
+        }
+
+        // ==================== PROVEEDOR ====================
+        composable<Screen.ProveedorListScreen> {
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+            ProveedorListScreen(
+                viewModel = proveedorViewModel,
+                onNavigateToProveedor = {
+                    navController.navigate(Screen.ProveedorScreen)
+                },
+                onEditProveedor = { proveedorId ->
+                    navController.navigate(Screen.EditarProveedor(proveedorId))
+                }
+            )
+        }
+
+        composable<Screen.ProveedorScreen> {
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+            ProveedorScreen(
+                viewModel = proveedorViewModel,
+                proveedorId = 0,
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+
+        composable<Screen.EditarProveedor> { backStackEntry ->
+            val proveedorId = backStackEntry.arguments?.getString("proveedorId")?.toIntOrNull() ?: 0
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+            ProveedorScreen(
+                viewModel = proveedorViewModel,
+                proveedorId = proveedorId,
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+
+        // ==================== COMPRA ====================
+        composable<Screen.CompraListScreen> {
+            val compraViewModel: CompraViewModel = hiltViewModel()
+            CompraListScreen(
+                viewModel = compraViewModel,
+                onNavigateToCompra = {
+                    navController.navigate(Screen.CompraScreen)
+                },
+                onEditCompra = { compraId ->
+                    navController.navigate(Screen.EditarCompra(compraId))
+                }
+            )
+        }
+
+        composable<Screen.CompraScreen> {
+            val compraViewModel: CompraViewModel = hiltViewModel()
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+            val proveedoresState = proveedorViewModel.uiState.collectAsState()
+
+            CompraScreen(
+                viewModel = compraViewModel,
+                compraId = 0,
+                onNavigateBack = { navController.navigateUp() },
+                proveedores = proveedoresState.value.proveedores
+            )
+        }
+
+        composable<Screen.EditarCompra> { backStackEntry ->
+            val compraId = backStackEntry.arguments?.getString("compraId")?.toIntOrNull() ?: 0
+            val compraViewModel: CompraViewModel = hiltViewModel()
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+            val proveedoresState = proveedorViewModel.uiState.collectAsState()
+
+            CompraScreen(
+                viewModel = compraViewModel,
+                compraId = compraId,
+                onNavigateBack = { navController.navigateUp() },
+                proveedores = proveedoresState.value.proveedores
+            )
+        }
+
+        // ==================== INSUMO ====================
+        composable<Screen.InsumoListScreen> {
+            val insumoViewModel: InsumoViewModel = hiltViewModel()
+            InsumoListScreen(
+                viewModel = insumoViewModel,
+                onNavigateToInsumo = {
+                    navController.navigate(Screen.InsumoScreen)
+                },
+                onEditInsumo = { insumoId ->
+                    navController.navigate(Screen.EditarInsumo(insumoId))
+                }
+            )
+        }
+
+        composable<Screen.InsumoScreen> {
+            val insumoViewModel: InsumoViewModel = hiltViewModel()
+            val categoriaViewModel: CategoriaViewModel = hiltViewModel()
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+
+            val categoriasState = categoriaViewModel.uiState.collectAsState()
+            val proveedoresState = proveedorViewModel.uiState.collectAsState()
+
+            InsumoScreen(
+                viewModel = insumoViewModel,
+                insumoId = 0,
+                onNavigateBack = { navController.navigateUp() },
+                categorias = categoriasState.value.categorias.map {
+                    CategoriaSimple(it.categoriaId, it.nombre)
+                },
+                proveedores = proveedoresState.value.proveedores.map {
+                    ProveedorSimple(it.proveedorId, it.nombre)
+                }
+            )
+        }
+
+        composable<Screen.EditarInsumo> { backStackEntry ->
+            val insumoId = backStackEntry.arguments?.getString("insumoId")?.toIntOrNull() ?: 0
+            val insumoViewModel: InsumoViewModel = hiltViewModel()
+            val categoriaViewModel: CategoriaViewModel = hiltViewModel()
+            val proveedorViewModel: ProveedorViewModel = hiltViewModel()
+
+            val categoriasState = categoriaViewModel.uiState.collectAsState()
+            val proveedoresState = proveedorViewModel.uiState.collectAsState()
+
+            InsumoScreen(
+                viewModel = insumoViewModel,
+                insumoId = insumoId,
+                onNavigateBack = { navController.navigateUp() },
+                categorias = categoriasState.value.categorias.map {
+                    CategoriaSimple(it.categoriaId, it.nombre)
+                },
+                proveedores = proveedoresState.value.proveedores.map {
+                    ProveedorSimple(it.proveedorId, it.nombre)
+                }
+            )
+        }
+
+        // ==================== RECLAMO ====================
+        composable<Screen.ReclamoListScreen> {
+            val reclamoViewModel: ReclamoViewModel = hiltViewModel()
+            ReclamoListScreen(
+                viewModel = reclamoViewModel,
+                onNavigateToReclamo = {
+                    navController.navigate(Screen.ReclamoScreen)
+                },
+                onEditReclamo = { reclamoId ->
+                    navController.navigate(Screen.EditarReclamo(reclamoId))
+                }
+            )
+        }
+
+        composable<Screen.ReclamoScreen> {
+            val reclamoViewModel: ReclamoViewModel = hiltViewModel()
+            ReclamoScreen(
+                viewModel = reclamoViewModel,
+                reclamoId = 0,
+                onNavigateBack = { navController.navigateUp() }
+            )
+        }
+
+        composable<Screen.EditarReclamo> { backStackEntry ->
+            val reclamoId = backStackEntry.arguments?.getString("reclamoId")?.toIntOrNull() ?: 0
+            val reclamoViewModel: ReclamoViewModel = hiltViewModel()
+            ReclamoScreen(
+                viewModel = reclamoViewModel,
+                reclamoId = reclamoId,
+                onNavigateBack = { navController.navigateUp() }
             )
         }
     }

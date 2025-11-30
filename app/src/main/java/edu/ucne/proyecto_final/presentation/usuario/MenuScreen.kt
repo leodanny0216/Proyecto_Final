@@ -1,6 +1,5 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -49,7 +48,10 @@ fun MenuScreen(
                             tint = MaterialTheme.colorScheme.error
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
             )
         }
     ) { innerPadding ->
@@ -79,25 +81,52 @@ fun MenuScreen(
                         onClick = { onMenuItemClick("usuarios") }
                     )
                 }
-                // Puedes agregar más items del menú aquí
                 item {
                     MenuCard(
-                        title = "Configuración",
-                        icon = Icons.Default.Settings,
-                        onClick = { /* TODO */ }
+                        title = "Categorías",
+                        icon = Icons.Default.List,
+                        onClick = { onMenuItemClick("categorias") }
+                    )
+                }
+                item {
+                    MenuCard(
+                        title = "Clientes",
+                        icon = Icons.Default.AccountBox,
+                        onClick = { onMenuItemClick("clientes") }
+                    )
+                }
+                item {
+                    MenuCard(
+                        title = "Proveedores",
+                        icon = Icons.Default.ShoppingCart,
+                        onClick = { onMenuItemClick("proveedores") }
+                    )
+                }
+                item {
+                    MenuCard(
+                        title = "Compras",
+                        icon = Icons.Default.ShoppingCart,
+                        onClick = { onMenuItemClick("compras") }
+                    )
+                }
+                item {
+                    MenuCard(
+                        title = "Insumos",
+                        icon = Icons.Default.Build,
+                        onClick = { onMenuItemClick("insumos") }
+                    )
+                }
+                item {
+                    MenuCard(
+                        title = "Reclamos",
+                        icon = Icons.Default.Warning,
+                        onClick = { onMenuItemClick("reclamos") }
                     )
                 }
                 item {
                     MenuCard(
                         title = "Reportes",
                         icon = Icons.Default.Info,
-                        onClick = { /* TODO */ }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Ayuda",
-                        icon = Icons.Default.MoreVert,
                         onClick = { /* TODO */ }
                     )
                 }

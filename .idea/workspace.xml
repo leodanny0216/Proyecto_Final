@@ -10,7 +10,74 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="REDY EL LOGIN">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CategoriaApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ClienteApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ClienteDetalleApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraDetalleApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/InsumoApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/InsumoDetalleApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ProveedorApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ReclamoApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/RemoteDataSource.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CategoriaDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDetalleDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDetalleDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/InsumoDetalleDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/InsumoDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ProveedorDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ReclamoDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/CategoriaRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ClienteDetalleRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ClienteRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/CompraDetalleRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/CompraRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/InsumoDetalleRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/InsumoRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ProveedorRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ReclamoRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/categoria/CategoriaListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/categoria/CategoriaScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/categoria/CategoriaUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/categoria/CategoriaViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/proveedor/ProveedorListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/proveedor/ProveedorScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/proveedor/ProveedorUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/proveedor/ProveedorViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoListScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoScreen.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoUiState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/usuario/RemoteDataSource.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/usuario/UsuariosApi.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/UsuarioRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/UsuarioRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/AppNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/AppNavigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/Screen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/Screen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/MenuScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/MenuScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763589082914</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="REDY EL LOGIN">
+      <option name="closed" value="true" />
+      <created>1763592631259</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763592631259</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

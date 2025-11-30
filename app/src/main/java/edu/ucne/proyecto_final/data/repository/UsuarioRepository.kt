@@ -1,6 +1,6 @@
 package edu.ucne.proyecto_final.data.repository
+import edu.ucne.proyecto_final.data.remote.RemoteDataSource
 import edu.ucne.proyecto_final.data.remote.Resource
-import edu.ucne.proyecto_final.data.remote.usuario.RemoteDataSource
 import edu.ucne.proyecto_final.dto.remote.UsuarioDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
