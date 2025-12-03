@@ -11,5 +11,5 @@ data class InsumoDto(
     val proveedorId: Int = 0,
     val proveedorNombre: String = "",
     val stockInicial: Int = 0,
-    val detalles: List<String> = emptyList()
+    val detalles: List<InsumoDetalleDto>? = null // Hacerlo nullable
 )
