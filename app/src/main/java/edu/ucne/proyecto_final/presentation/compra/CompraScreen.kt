@@ -1,7 +1,9 @@
 package edu.ucne.proyecto_final.presentation.compra
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -12,261 +14,226 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.ucne.proyecto_final.dto.remote.ProveedorDto
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompraScreen(
     viewModel: CompraViewModel = hiltViewModel(),
-    compraId: Int = 0,
-    onNavigateBack: () -> Unit,
-    proveedores: List<ProveedorDto> = emptyList()
+    proveedores: List<ProveedorDto>,
+    compraId: Int? = null,
+    onNavigateBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showProveedorDialog by remember { mutableStateOf(false) }
 
-    LaunchedEffect(compraId) {
-        if (compraId > 0) {
-            val compra = uiState.compras.find { it.compraId == compraId }
-            compra?.let { viewModel.setCompraForEdit(it) }
-        } else {
-            viewModel.clearForm()
+    // Auto limpiar mensaje éxito
+    LaunchedEffect(uiState.successMessage) {
+        if (uiState.successMessage != null) {
+            delay(2500)
+            viewModel.clearMessages()
         }
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(if (uiState.compraId == 0) "Nueva Compra" else "Editar Compra")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
-            )
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // Mensajes de error
-            item {
-                uiState.errorMessage?.let { error ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
-                        )
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.Default.Warning,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.error
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = error, color = MaterialTheme.colorScheme.error)
-                        }
-                    }
-                }
-            }
-
-            // Mensaje de éxito
-            item {
-                uiState.successMessage?.let { message ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        )
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = message)
-                        }
-                    }
-                    LaunchedEffect(Unit) {
-                        kotlinx.coroutines.delay(2000)
-                        onNavigateBack()
-                    }
-                }
-            }
-
-            // Selección de proveedor
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Proveedor",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedButton(
-                            onClick = { showProveedorDialog = true },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Icon(Icons.Default.AccountBox, contentDescription = null)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = uiState.proveedor?.nombre ?: "Seleccionar proveedor"
-                            )
-                        }
-                    }
-                }
-            }
-
-            // Campo de fecha
-            item {
-                OutlinedTextField(
-                    value = uiState.fecha,
-                    onValueChange = { viewModel.setFecha(it) },
-                    label = { Text("Fecha (YYYY-MM-DD)") },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
-                    singleLine = true
-                )
-            }
-
-            // Campo de artículo
-            item {
-                OutlinedTextField(
-                    value = uiState.articulo,
-                    onValueChange = { viewModel.setArticulo(it) },
-                    label = { Text("Artículo") },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.ShoppingCart, contentDescription = null) },
-                    singleLine = true
-                )
-            }
-
-            // Campo de cantidad
-            item {
-                OutlinedTextField(
-                    value = if (uiState.cantidad == 0) "" else uiState.cantidad.toString(),
-                    onValueChange = {
-                        val cantidad = it.toIntOrNull() ?: 0
-                        viewModel.setCantidad(cantidad)
-                    },
-                    label = { Text("Cantidad") },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) },
-                    singleLine = true
-                )
-            }
-
-            // Total
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(
-                            text = "Total: ${uiState.total}",
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-
-            // Botones de acción
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = {
-                            viewModel.clearForm()
-                            onNavigateBack()
-                        },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Cancelar")
-                    }
-
-                    Button(
-                        onClick = {
-                            if (uiState.compraId == 0) {
-                                viewModel.createCompra()
-                            } else {
-                                viewModel.updateCompra()
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        enabled = !uiState.isCreating && !uiState.isUpdating
-                    ) {
-                        if (uiState.isCreating || uiState.isUpdating) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
-                        } else {
-                            Text(if (uiState.compraId == 0) "Guardar" else "Actualizar")
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Diálogo para seleccionar proveedor
-    if (showProveedorDialog) {
+    // ================== DIALOGO PROVEEDOR ==================
+    if (uiState.showProveedorDialog) {
         AlertDialog(
-            onDismissRequest = { showProveedorDialog = false },
+            onDismissRequest = { viewModel.hideProveedorSelector() },
             title = { Text("Seleccionar Proveedor") },
             text = {
                 LazyColumn {
-                    items(proveedores.size) { index ->
-                        val proveedor = proveedores[index]
-                        TextButton(
-                            onClick = {
-                                viewModel.setProveedor(proveedor)
-                                showProveedorDialog = false
-                            },
-                            modifier = Modifier.fillMaxWidth()
+                    items(proveedores) { proveedor ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .clickable {
+                                    viewModel.setProveedorId(proveedor.proveedorId)
+                                    viewModel.hideProveedorSelector()
+                                }
                         ) {
-                            Text(
-                                text = proveedor.nombre,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(proveedor.nombre, fontWeight = FontWeight.Bold)
+                                Text(proveedor.email)
+                                Text(proveedor.telefono)
+                            }
                         }
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showProveedorDialog = false }) {
+                TextButton(onClick = { viewModel.hideProveedorSelector() }) {
                     Text("Cerrar")
                 }
             }
         )
+    }
+
+    // ================== UI PRINCIPAL ==================
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Registrar Compra") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            if (uiState.detallesTemporales.isNotEmpty() && uiState.proveedorId > 0) {
+                FloatingActionButton(
+                    onClick = { viewModel.createCompra() }
+                ) {
+                    if (uiState.isCreating) {
+                        CircularProgressIndicator(
+                            strokeWidth = 2.dp
+                        )
+                    } else {
+                        Icon(Icons.Default.Check, contentDescription = "Guardar")
+                    }
+                }
+            }
+        }
+    ) { padding ->
+
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp)
+                .fillMaxSize()
+        ) {
+
+            // ---------- ERRORES ----------
+            uiState.errorMessage?.let {
+                Text(it, color = MaterialTheme.colorScheme.error)
+                Spacer(Modifier.height(10.dp))
+            }
+
+            // ---------- ÉXITO ----------
+            uiState.successMessage?.let {
+                Text(it, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.height(10.dp))
+            }
+
+            // ---------- PROVEEDOR ----------
+            OutlinedButton(
+                onClick = { viewModel.showProveedorSelector(proveedores) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(Icons.Default.Face, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    if (uiState.proveedorId > 0)
+                        "Proveedor seleccionado: ${uiState.proveedorId}"
+                    else "Seleccionar proveedor"
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // ---------- FECHA ----------
+            OutlinedTextField(
+                value = uiState.fecha,
+                onValueChange = viewModel::setFecha,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Fecha (YYYY-MM-DD)") },
+                leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) }
+            )
+
+            Spacer(Modifier.height(20.dp))
+
+            Text("Agregar Detalle", fontWeight = FontWeight.Bold)
+
+            // ---------- FORM DETALLE ----------
+            OutlinedTextField(
+                value = uiState.detalleActual.articulo,
+                onValueChange = viewModel::setDetalleArticulo,
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text("Artículo") }
+            )
+            Spacer(Modifier.height(8.dp))
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedTextField(
+                    value = uiState.detalleActual.cantidad.takeIf { it > 0 }?.toString() ?: "",
+                    onValueChange = {
+                        viewModel.setDetalleCantidad(it.toIntOrNull() ?: 0)
+                    },
+                    modifier = Modifier.weight(1f),
+                    label = { Text("Cantidad") }
+                )
+                OutlinedTextField(
+                    value = uiState.detalleActual.precioUnitario.takeIf { it > 0 }?.toString()
+                        ?: "",
+                    onValueChange = {
+                        viewModel.setDetallePrecioUnitario(it.toDoubleOrNull() ?: 0.0)
+                    },
+                    modifier = Modifier.weight(1f),
+                    label = { Text("Precio") }
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { viewModel.addDetalle() },
+                enabled = uiState.detalleActual.articulo.isNotBlank() &&
+                        uiState.detalleActual.cantidad > 0 &&
+                        uiState.detalleActual.precioUnitario > 0
+            ) {
+                Icon(Icons.Default.Add, contentDescription = null)
+                Spacer(Modifier.width(6.dp))
+                Text("Agregar Detalle")
+            }
+
+            Spacer(Modifier.height(20.dp))
+
+            // ---------- LISTA DE DETALLES ----------
+            if (uiState.detallesTemporales.isNotEmpty()) {
+                Text(
+                    "Detalles (${uiState.detallesTemporales.size})",
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.height(10.dp))
+
+                LazyColumn {
+                    items(uiState.detallesTemporales) { det ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column {
+                                    Text(det.articulo, fontWeight = FontWeight.Bold)
+                                    Text("${det.cantidad} x ${det.precioUnitario}")
+                                    Text("Subtotal: ${det.subtotal}")
+                                }
+                                IconButton(onClick = {
+                                    val index = uiState.detallesTemporales.indexOf(det)
+                                    viewModel.removeDetalleTemporal(index)
+                                }) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Eliminar")
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(20.dp))
+
+                Text(
+                    "TOTAL: $${String.format("%.2f", uiState.total)}",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
     }
 }

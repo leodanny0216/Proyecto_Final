@@ -1,3 +1,4 @@
+// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
 import androidx.compose.foundation.clickable
@@ -11,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.ucne.proyecto_final.data.remote.dto.ReclamoDto
@@ -55,7 +55,7 @@ fun ReclamoListScreen(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Buscar por descripción o fecha...") },
+                placeholder = { Text("Buscar por descripción, tipo o fecha...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (uiState.searchQuery.isNotEmpty()) {
@@ -69,7 +69,7 @@ fun ReclamoListScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Mensajes de error o éxito
+            // Mensajes
             uiState.errorReclamos?.let { error ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -87,10 +87,7 @@ fun ReclamoListScreen(
                             tint = MaterialTheme.colorScheme.error
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = error,
-                            color = MaterialTheme.colorScheme.error
-                        )
+                        Text(text = error, color = MaterialTheme.colorScheme.error)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -179,7 +176,7 @@ fun ReclamoListScreen(
             onDismissRequest = { showDeleteDialog = null },
             title = { Text("Confirmar eliminación") },
             text = {
-                Text("¿Está seguro de que desea eliminar este reclamo?")
+                Text("¿Está seguro de que desea eliminar el reclamo?")
             },
             confirmButton = {
                 TextButton(
@@ -220,52 +217,33 @@ fun ReclamoItem(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null,
-                            modifier = Modifier.size(16.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = reclamo.fechaIncidente,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     Text(
-                        text = reclamo.descripcion,
+                        text = "Tipo: ${reclamo.tipoReclamo}",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Fecha: ${reclamo.fechaIncidente}",
                         style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = reclamo.descripcion,
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 2
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
                     if (reclamo.evidencias.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                Icons.Default.Info,
-                                contentDescription = null,
-                                modifier = Modifier.size(16.dp),
-                                tint = MaterialTheme.colorScheme.secondary
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = "${reclamo.evidencias.size} evidencia(s)",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                        }
+                        Text(
+                            text = "Evidencias: ${reclamo.evidencias.size}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
 

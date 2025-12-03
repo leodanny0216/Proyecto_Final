@@ -23,8 +23,15 @@ import javax.net.ssl.X509TrustManager
 @Module
 object ApiModule {
 
-    private const val BASE_URL = "https://gestionhuacalesapi.azurewebsites.net/"
+    // -----------------------------
+    // URLs SEPARADAS
+    // -----------------------------
+    private const val BASE_URL_HUACALES = "https://gestionhuacalesapi.azurewebsites.net/"
+    private const val BASE_URL_VENTAS = "https://ventasever.azurewebsites.net/"
 
+    // -----------------------------
+    // Moshi
+    // -----------------------------
     @Provides
     @Singleton
     fun provideMoshi(): Moshi =
@@ -32,6 +39,9 @@ object ApiModule {
             .add(KotlinJsonAdapterFactory())
             .build()
 
+    // -----------------------------
+    // OkHttp
+    // -----------------------------
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -39,36 +49,17 @@ object ApiModule {
             level = HttpLoggingInterceptor.Level.BODY
         }
 
-        return try {
-            val trustAllCerts = arrayOf<X509TrustManager>(object : X509TrustManager {
-                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {}
-                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-            })
-
-            val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, SecureRandom())
-            val sslSocketFactory = sslContext.socketFactory
-
-            OkHttpClient.Builder()
-                .sslSocketFactory(sslSocketFactory, trustAllCerts[0])
-                .hostnameVerifier { _, _ -> true }
-                .addInterceptor(loggingInterceptor)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build()
-
-        } catch (e: Exception) {
-            OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build()
-        }
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .build()
     }
 
+    // -----------------------------
+    // Función para crear APIs
+    // -----------------------------
     private inline fun <reified T> createApi(
         baseUrl: String,
         moshi: Moshi,
@@ -82,47 +73,63 @@ object ApiModule {
             .create(T::class.java)
 
 
-    // -----------------------------
-    // TODOS LOS PROVIDERS DE APIs
-    // -----------------------------
+    // ============================================================
+    // APIs QUE USA GESTIONHUACALESAPI
+    // ============================================================
 
     @Provides @Singleton
     fun provideUsuarioApi(moshi: Moshi, client: OkHttpClient): UsuarioApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_HUACALES, moshi, client)
+
+
+
 
     @Provides @Singleton
     fun provideCategoriaApi(moshi: Moshi, client: OkHttpClient): CategoriaApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideClienteApi(moshi: Moshi, client: OkHttpClient): ClienteApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideClienteDetalleApi(moshi: Moshi, client: OkHttpClient): ClienteDetalleApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideCompraApi(moshi: Moshi, client: OkHttpClient): CompraApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideCompraDetalleApi(moshi: Moshi, client: OkHttpClient): CompraDetalleApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideInsumoApi(moshi: Moshi, client: OkHttpClient): InsumoApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideInsumoDetalleApi(moshi: Moshi, client: OkHttpClient): InsumoDetalleApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideProveedorApi(moshi: Moshi, client: OkHttpClient): ProveedorApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
 
     @Provides @Singleton
     fun provideReclamoApi(moshi: Moshi, client: OkHttpClient): ReclamoApi =
-        createApi(BASE_URL, moshi, client)
+        createApi(BASE_URL_VENTAS, moshi, client)
+
+
+    // ============================================================
+    // APIs QUE USES DE VENTASEVER (si quieres agregar)
+    // ============================================================
+
+    // EJEMPLO:
+    /*
+    @Provides
+    @Singleton
+    fun provideVentaApi(moshi: Moshi, client: OkHttpClient): VentaApi =
+        createApi(BASE_URL_VENTAS, moshi, client)
+    */
 }

@@ -1,17 +1,20 @@
+// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 // Modelo temporal para tipos de reclamo
 data class TipoReclamoSimple(val id: Int, val nombre: String)
@@ -24,15 +27,22 @@ fun ReclamoScreen(
     onNavigateBack: () -> Unit,
     tiposReclamo: List<TipoReclamoSimple> = listOf(
         TipoReclamoSimple(1, "Producto defectuoso"),
-        TipoReclamoSimple(2, "Servicio inadecuado"),
-        TipoReclamoSimple(3, "Retraso en entrega"),
-        TipoReclamoSimple(4, "Otro")
+        TipoReclamoSimple(2, "Servicio deficiente"),
+        TipoReclamoSimple(3, "Entrega tardía"),
+        TipoReclamoSimple(4, "Producto incorrecto"),
+        TipoReclamoSimple(5, "Otro")
     )
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showTipoReclamoDialog by remember { mutableStateOf(false) }
-    var showEvidenciaDialog by remember { mutableStateOf(false) }
+    var showTipoDialog by remember { mutableStateOf(false) }
     var nuevaEvidencia by remember { mutableStateOf("") }
+    var showAddEvidenciaDialog by remember { mutableStateOf(false) }
+    var fechaManual by remember { mutableStateOf("") }
+
+    // Inicializar fechaManual con el valor actual del estado
+    LaunchedEffect(uiState.fechaIncidente) {
+        fechaManual = uiState.fechaIncidente
+    }
 
     LaunchedEffect(reclamoId) {
         if (reclamoId > 0) {
@@ -137,51 +147,105 @@ fun ReclamoScreen(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
-                            onClick = { showTipoReclamoDialog = true },
+                            onClick = { showTipoDialog = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Icon(Icons.Default.Info, contentDescription = null)
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = if (uiState.tipoReclamoNombre.isNotEmpty())
-                                    uiState.tipoReclamoNombre
+                                text = if (uiState.tipoReclamo.isNotEmpty())
+                                    uiState.tipoReclamo
                                 else
-                                    "Seleccionar tipo"
+                                    "Seleccionar tipo de reclamo"
                             )
                         }
                     }
                 }
             }
 
-            // Campo de fecha del incidente
+            // Campo de fecha del incidente (ingreso manual)
             item {
-                OutlinedTextField(
-                    value = uiState.fechaIncidente,
-                    onValueChange = { viewModel.setFechaIncidente(it) },
-                    label = { Text("Fecha del Incidente (YYYY-MM-DD)") },
+                Card(
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
-                    singleLine = true
-                )
-            }
-
-            // Campo de descripción
-            item {
-                OutlinedTextField(
-                    value = uiState.descripcion,
-                    onValueChange = { viewModel.setDescripcion(it) },
-                    label = { Text("Descripción del Reclamo") },
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.Edit, contentDescription = null) },
-                    minLines = 4,
-                    maxLines = 6,
-                    supportingText = {
-                        Text("${uiState.descripcion.length} caracteres (mínimo 10)")
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "Fecha del Incidente",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = fechaManual,
+                            onValueChange = {
+                                fechaManual = it
+                                // Actualizar el ViewModel cuando el usuario termina de editar
+                                viewModel.setFechaIncidente(it)
+                            },
+                            label = { Text("YYYY-MM-DD") },
+                            modifier = Modifier.fillMaxWidth(),
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Default.DateRange,
+                                    contentDescription = "Fecha"
+                                )
+                            },
+                            placeholder = { Text("Ej: 2023-12-31") },
+                            singleLine = true,
+                            supportingText = {
+                                if (fechaManual.isNotEmpty()) {
+                                    Text(
+                                        text = if (esFechaValida(fechaManual))
+                                            "Fecha válida"
+                                        else
+                                            "Formato debe ser YYYY-MM-DD",
+                                        color = if (esFechaValida(fechaManual))
+                                            MaterialTheme.colorScheme.primary
+                                        else
+                                            MaterialTheme.colorScheme.error
+                                    )
+                                }
+                            },
+                            isError = fechaManual.isNotEmpty() && !esFechaValida(fechaManual)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Ingrese la fecha en formato YYYY-MM-DD",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
-                )
+                }
             }
 
-            // Sección de evidencias
+            // Descripción del reclamo
+            item {
+                Column {
+                    OutlinedTextField(
+                        value = uiState.descripcion,
+                        onValueChange = { viewModel.setDescripcion(it) },
+                        label = { Text("Descripción del Reclamo") },
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = { Icon(Icons.Default.Create, contentDescription = null) },
+                        minLines = 3,
+                        maxLines = 5
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "${uiState.descripcion.length} caracteres (mínimo 10)",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (uiState.descripcion.length >= 10)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+
+            // Evidencias
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -200,33 +264,63 @@ fun ReclamoScreen(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold
                             )
-                            IconButton(onClick = { showEvidenciaDialog = true }) {
-                                Icon(
-                                    Icons.Default.Add,
-                                    contentDescription = "Agregar evidencia",
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
+                            IconButton(onClick = { showAddEvidenciaDialog = true }) {
+                                Icon(Icons.Default.Add, contentDescription = "Agregar evidencia")
                             }
                         }
 
                         if (uiState.evidencias.isEmpty()) {
-                            Spacer(modifier = Modifier.height(8.dp))
                             Text(
                                 text = "No hay evidencias agregadas",
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                        } else {
+                            Column {
+                                uiState.evidencias.forEachIndexed { index, evidencia ->
+                                    Card(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 4.dp),
+                                        colors = CardDefaults.cardColors(
+                                            containerColor = MaterialTheme.colorScheme.surface
+                                        )
+                                    ) {
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(8.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Icon(
+                                                Icons.Default.Send,
+                                                contentDescription = null,
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = evidencia,
+                                                modifier = Modifier.weight(1f),
+                                                style = MaterialTheme.typography.bodySmall,
+                                                maxLines = 1
+                                            )
+                                            IconButton(
+                                                onClick = { viewModel.removeEvidencia(index) },
+                                                modifier = Modifier.size(24.dp)
+                                            ) {
+                                                Icon(
+                                                    Icons.Default.Delete,
+                                                    contentDescription = "Eliminar",
+                                                    tint = MaterialTheme.colorScheme.error
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-            }
-
-            // Lista de evidencias
-            items(uiState.evidencias) { evidencia ->
-                EvidenciaItem(
-                    evidencia = evidencia,
-                    onRemove = { viewModel.removeEvidencia(evidencia) }
-                )
             }
 
             // Botones de acción
@@ -238,6 +332,7 @@ fun ReclamoScreen(
                     OutlinedButton(
                         onClick = {
                             viewModel.clearForm()
+                            fechaManual = ""
                             onNavigateBack()
                         },
                         modifier = Modifier.weight(1f)
@@ -247,6 +342,11 @@ fun ReclamoScreen(
 
                     Button(
                         onClick = {
+                            // Primero asegurar que la fecha se guardó del campo manual
+                            if (fechaManual.isNotEmpty() && esFechaValida(fechaManual)) {
+                                viewModel.setFechaIncidente(fechaManual)
+                            }
+
                             if (uiState.reclamoId == 0) {
                                 viewModel.createReclamo()
                             } else {
@@ -254,7 +354,11 @@ fun ReclamoScreen(
                             }
                         },
                         modifier = Modifier.weight(1f),
-                        enabled = !uiState.isCreating && !uiState.isUpdating
+                        enabled = !uiState.isCreating && !uiState.isUpdating &&
+                                uiState.descripcion.length >= 10 &&
+                                uiState.tipoReclamoId > 0 &&
+                                fechaManual.isNotEmpty() &&
+                                esFechaValida(fechaManual)
                     ) {
                         if (uiState.isCreating || uiState.isUpdating) {
                             CircularProgressIndicator(
@@ -271,9 +375,9 @@ fun ReclamoScreen(
     }
 
     // Diálogo para seleccionar tipo de reclamo
-    if (showTipoReclamoDialog) {
+    if (showTipoDialog) {
         AlertDialog(
-            onDismissRequest = { showTipoReclamoDialog = false },
+            onDismissRequest = { showTipoDialog = false },
             title = { Text("Seleccionar Tipo de Reclamo") },
             text = {
                 LazyColumn {
@@ -282,20 +386,17 @@ fun ReclamoScreen(
                         TextButton(
                             onClick = {
                                 viewModel.setTipoReclamo(tipo.id, tipo.nombre)
-                                showTipoReclamoDialog = false
+                                showTipoDialog = false
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = tipo.nombre,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                            Text(text = tipo.nombre)
                         }
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showTipoReclamoDialog = false }) {
+                TextButton(onClick = { showTipoDialog = false }) {
                     Text("Cerrar")
                 }
             }
@@ -303,37 +404,37 @@ fun ReclamoScreen(
     }
 
     // Diálogo para agregar evidencia
-    if (showEvidenciaDialog) {
+    if (showAddEvidenciaDialog) {
         AlertDialog(
-            onDismissRequest = {
-                showEvidenciaDialog = false
-                nuevaEvidencia = ""
-            },
+            onDismissRequest = { showAddEvidenciaDialog = false },
             title = { Text("Agregar Evidencia") },
             text = {
-                OutlinedTextField(
-                    value = nuevaEvidencia,
-                    onValueChange = { nuevaEvidencia = it },
-                    label = { Text("URL o descripción de la evidencia") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
-                )
+                Column {
+                    OutlinedTextField(
+                        value = nuevaEvidencia,
+                        onValueChange = { nuevaEvidencia = it },
+                        label = { Text("URL de la evidencia") },
+                        modifier = Modifier.fillMaxWidth(),
+                        placeholder = { Text("https://example.com/evidencia.jpg") }
+                    )
+                }
             },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        viewModel.addEvidencia(nuevaEvidencia)
-                        nuevaEvidencia = ""
-                        showEvidenciaDialog = false
-                    },
-                    enabled = nuevaEvidencia.isNotBlank()
+                        if (nuevaEvidencia.isNotBlank()) {
+                            viewModel.addEvidencia(nuevaEvidencia)
+                            nuevaEvidencia = ""
+                            showAddEvidenciaDialog = false
+                        }
+                    }
                 ) {
                     Text("Agregar")
                 }
             },
             dismissButton = {
                 TextButton(onClick = {
-                    showEvidenciaDialog = false
+                    showAddEvidenciaDialog = false
                     nuevaEvidencia = ""
                 }) {
                     Text("Cancelar")
@@ -343,45 +444,36 @@ fun ReclamoScreen(
     }
 }
 
-@Composable
-fun EvidenciaItem(
-    evidencia: String,
-    onRemove: () -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row(
-                modifier = Modifier.weight(1f),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Default.Info,
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp),
-                    tint = MaterialTheme.colorScheme.secondary
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = evidencia,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-            IconButton(onClick = onRemove) {
-                Icon(
-                    Icons.Default.Delete,
-                    contentDescription = "Eliminar",
-                    tint = MaterialTheme.colorScheme.error
-                )
-            }
+// Función para validar el formato de fecha
+fun esFechaValida(fecha: String): Boolean {
+    return try {
+        // Validar formato YYYY-MM-DD
+        if (!Regex("^\\d{4}-\\d{2}-\\d{2}\$").matches(fecha)) {
+            return false
         }
+
+        val partes = fecha.split("-")
+        if (partes.size != 3) return false
+
+        val anio = partes[0].toInt()
+        val mes = partes[1].toInt()
+        val dia = partes[2].toInt()
+
+        // Validaciones básicas
+        if (mes < 1 || mes > 12) return false
+        if (dia < 1 || dia > 31) return false
+        if (anio < 1900 || anio > 2100) return false
+
+        // Validar días según el mes
+        when (mes) {
+            2 -> {
+                val esBisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0)
+                return if (esBisiesto) dia <= 29 else dia <= 28
+            }
+            4, 6, 9, 11 -> return dia <= 30
+            else -> return dia <= 31
+        }
+    } catch (e: Exception) {
+        false
     }
 }

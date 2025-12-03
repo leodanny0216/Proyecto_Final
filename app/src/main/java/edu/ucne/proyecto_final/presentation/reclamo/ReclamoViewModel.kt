@@ -1,16 +1,19 @@
+// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.proyecto_final.data.remote.Resource
-import edu.ucne.proyecto_final.data.repository.ReclamoRepository
 import edu.ucne.proyecto_final.data.remote.dto.ReclamoDto
+import edu.ucne.proyecto_final.data.repository.ReclamoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -60,18 +63,14 @@ class ReclamoViewModel @Inject constructor(
     fun createReclamo() {
         val currentState = _uiState.value
 
+        // Validaciones
         if (currentState.tipoReclamoId == 0) {
             _uiState.update { it.copy(errorMessage = "Debe seleccionar un tipo de reclamo") }
             return
         }
 
         if (currentState.fechaIncidente.isBlank()) {
-            _uiState.update { it.copy(errorMessage = "La fecha del incidente es requerida") }
-            return
-        }
-
-        if (currentState.descripcion.isBlank()) {
-            _uiState.update { it.copy(errorMessage = "La descripción es requerida") }
+            _uiState.update { it.copy(errorMessage = "Debe seleccionar una fecha del incidente") }
             return
         }
 
@@ -87,8 +86,9 @@ class ReclamoViewModel @Inject constructor(
                 val nuevoReclamo = ReclamoDto(
                     reclamoId = 0,
                     tipoReclamoId = currentState.tipoReclamoId,
+                    tipoReclamo = currentState.tipoReclamo,
                     fechaIncidente = currentState.fechaIncidente,
-                    descripcion = currentState.descripcion.trim(),
+                    descripcion = currentState.descripcion,
                     evidencias = currentState.evidencias
                 )
 
@@ -99,8 +99,9 @@ class ReclamoViewModel @Inject constructor(
                                 isCreating = false,
                                 successMessage = "Reclamo creado exitosamente",
                                 errorMessage = null,
+                                // Limpiar formulario
                                 tipoReclamoId = 0,
-                                tipoReclamoNombre = "",
+                                tipoReclamo = "",
                                 fechaIncidente = "",
                                 descripcion = "",
                                 evidencias = emptyList()
@@ -136,18 +137,8 @@ class ReclamoViewModel @Inject constructor(
             return
         }
 
-        if (currentState.tipoReclamoId == 0) {
-            _uiState.update { it.copy(errorMessage = "Debe seleccionar un tipo de reclamo") }
-            return
-        }
-
-        if (currentState.fechaIncidente.isBlank()) {
-            _uiState.update { it.copy(errorMessage = "La fecha del incidente es requerida") }
-            return
-        }
-
-        if (currentState.descripcion.isBlank()) {
-            _uiState.update { it.copy(errorMessage = "La descripción es requerida") }
+        if (currentState.descripcion.length < 10) {
+            _uiState.update { it.copy(errorMessage = "La descripción debe tener al menos 10 caracteres") }
             return
         }
 
@@ -158,8 +149,9 @@ class ReclamoViewModel @Inject constructor(
                 val reclamoActualizado = ReclamoDto(
                     reclamoId = currentState.reclamoId,
                     tipoReclamoId = currentState.tipoReclamoId,
+                    tipoReclamo = currentState.tipoReclamo,
                     fechaIncidente = currentState.fechaIncidente,
-                    descripcion = currentState.descripcion.trim(),
+                    descripcion = currentState.descripcion,
                     evidencias = currentState.evidencias
                 )
 
@@ -224,6 +216,7 @@ class ReclamoViewModel @Inject constructor(
             it.copy(
                 reclamoId = reclamo.reclamoId,
                 tipoReclamoId = reclamo.tipoReclamoId,
+                tipoReclamo = reclamo.tipoReclamo,
                 fechaIncidente = reclamo.fechaIncidente,
                 descripcion = reclamo.descripcion,
                 evidencias = reclamo.evidencias,
@@ -236,7 +229,7 @@ class ReclamoViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 tipoReclamoId = tipoId,
-                tipoReclamoNombre = tipoNombre
+                tipoReclamo = tipoNombre
             )
         }
     }
@@ -249,18 +242,16 @@ class ReclamoViewModel @Inject constructor(
         _uiState.update { it.copy(descripcion = descripcion) }
     }
 
-    fun addEvidencia(evidencia: String) {
-        if (evidencia.isNotBlank()) {
-            _uiState.update {
-                it.copy(evidencias = it.evidencias + evidencia.trim())
-            }
-        }
+    fun addEvidencia(url: String) {
+        val nuevasEvidencias = _uiState.value.evidencias.toMutableList()
+        nuevasEvidencias.add(url)
+        _uiState.update { it.copy(evidencias = nuevasEvidencias) }
     }
 
-    fun removeEvidencia(evidencia: String) {
-        _uiState.update {
-            it.copy(evidencias = it.evidencias.filter { e -> e != evidencia })
-        }
+    fun removeEvidencia(index: Int) {
+        val nuevasEvidencias = _uiState.value.evidencias.toMutableList()
+        nuevasEvidencias.removeAt(index)
+        _uiState.update { it.copy(evidencias = nuevasEvidencias) }
     }
 
     fun clearForm() {
@@ -268,7 +259,7 @@ class ReclamoViewModel @Inject constructor(
             it.copy(
                 reclamoId = 0,
                 tipoReclamoId = 0,
-                tipoReclamoNombre = "",
+                tipoReclamo = "",
                 fechaIncidente = "",
                 descripcion = "",
                 evidencias = emptyList(),
@@ -285,6 +276,7 @@ class ReclamoViewModel @Inject constructor(
         } else {
             _uiState.value.reclamos.filter {
                 it.descripcion.contains(query, ignoreCase = true) ||
+                        it.tipoReclamo.contains(query, ignoreCase = true) ||
                         it.fechaIncidente.contains(query, ignoreCase = true)
             }
         }

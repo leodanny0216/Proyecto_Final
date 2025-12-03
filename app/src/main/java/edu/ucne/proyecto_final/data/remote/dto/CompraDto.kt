@@ -12,5 +12,6 @@ data class CompraDto(
     val proveedorNombre: String = "",
     val fecha: String = "",
     val proveedor: ProveedorDto? = null,
-    val detalles: List<String> = emptyList() // IDs o nombres de detalles
+    val detalles: List<CompraDetalleDto> = emptyList()
 )
+

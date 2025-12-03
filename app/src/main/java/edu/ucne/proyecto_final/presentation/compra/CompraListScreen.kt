@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import edu.ucne.proyecto_final.data.remote.dto.CompraDetalleDto
 import edu.ucne.proyecto_final.data.remote.dto.CompraDto
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,12 +50,13 @@ fun CompraListScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
+
             // Barra de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Buscar por proveedor, artículo o fecha...") },
+                placeholder = { Text("Buscar por artículo o ID...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (uiState.searchQuery.isNotEmpty()) {
@@ -68,100 +70,41 @@ fun CompraListScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Mensajes de error o éxito
+            // Mensajes de error
             uiState.errorCompras?.let { error ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer
-                    )
-                ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.Warning,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = error,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
+                Text(text = error, color = MaterialTheme.colorScheme.error)
                 Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            uiState.successMessage?.let { message ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            Icons.Default.CheckCircle,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = message)
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(3000)
-                    viewModel.clearMessages()
-                }
             }
 
             // Lista de compras
             when {
                 uiState.isLoadingCompras -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
                     }
                 }
+
                 uiState.comprasFiltradas.isEmpty() -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(
-                                Icons.Default.ShoppingCart,
-                                contentDescription = null,
-                                modifier = Modifier.size(64.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text(
-                                text = if (uiState.searchQuery.isBlank())
-                                    "No hay compras registradas"
-                                else
-                                    "No se encontraron compras",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                        }
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text(
+                            text = if (uiState.searchQuery.isBlank())
+                                "No hay compras registradas"
+                            else
+                                "No se encontraron compras"
+                        )
                     }
                 }
+
                 else -> {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
+                    LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         items(uiState.comprasFiltradas) { compra ->
+                            // Filtrar detalles de la compra actual
+                            val detalles: List<CompraDetalleDto> =
+                                uiState.detalles.filter { it.compraId == compra.compraId }
+
                             CompraItem(
                                 compra = compra,
+                                detalles = detalles,
                                 onEdit = { onEditCompra(compra.compraId) },
                                 onDelete = { showDeleteDialog = compra }
                             )
@@ -177,16 +120,12 @@ fun CompraListScreen(
         AlertDialog(
             onDismissRequest = { showDeleteDialog = null },
             title = { Text("Confirmar eliminación") },
-            text = {
-                Text("¿Está seguro de que desea eliminar la compra de ${compra.proveedorNombre}?")
-            },
+            text = { Text("¿Está seguro de que desea eliminar la compra ID ${compra.compraId}?") },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.deleteCompra(compra.compraId)
-                        showDeleteDialog = null
-                    }
-                ) {
+                TextButton(onClick = {
+                    viewModel.deleteCompra(compra.compraId)
+                    showDeleteDialog = null
+                }) {
                     Text("Eliminar")
                 }
             },
@@ -202,6 +141,7 @@ fun CompraListScreen(
 @Composable
 fun CompraItem(
     compra: CompraDto,
+    detalles: List<CompraDetalleDto>,
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
@@ -211,58 +151,29 @@ fun CompraItem(
             .clickable(onClick = onEdit),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Compra ID: ${compra.compraId}",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text("Proveedor: ${compra.proveedorNombre}")
+            Spacer(modifier = Modifier.height(4.dp))
+            Text("Fecha: ${compra.fecha}")
+            Spacer(modifier = Modifier.height(4.dp))
+
+
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.End
             ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "Proveedor: ${compra.proveedorNombre}",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Fecha: ${compra.fecha}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Cantidad: ${compra.cantidad}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    if (compra.articulo.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(
-                            text = "Artículo: ${compra.articulo}",
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
+                IconButton(onClick = onEdit) {
+                    Icon(Icons.Default.Edit, contentDescription = "Editar")
                 }
-
-                Row {
-                    IconButton(onClick = onEdit) {
-                        Icon(
-                            Icons.Default.Edit,
-                            contentDescription = "Editar",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                    IconButton(onClick = onDelete) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Eliminar",
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Default.Delete, contentDescription = "Eliminar")
                 }
             }
         }

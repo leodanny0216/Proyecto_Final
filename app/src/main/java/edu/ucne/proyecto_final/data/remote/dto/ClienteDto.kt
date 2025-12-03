@@ -10,5 +10,5 @@ data class ClienteDto(
     val numeroTelefono: String = "",
     val correoElectronico: String = "",
     val direccion: String = "",
-    val detalles: List<String> = emptyList()
+    val detalles: List<ClienteDetalleDto>? = null // ⬅️ NULLABLE para manejar null del API
 )

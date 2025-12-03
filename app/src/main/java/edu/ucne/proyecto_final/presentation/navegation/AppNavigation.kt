@@ -219,6 +219,7 @@ fun AppNavigation() {
                 onNavigateBack = { navController.navigateUp() },
                 proveedores = proveedoresState.value.proveedores
             )
+
         }
 
         composable<Screen.EditarCompra> { backStackEntry ->

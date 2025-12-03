@@ -65,6 +65,7 @@ private val usuarioApi: UsuarioApi,
     suspend fun updateCompra(id: Int, compra: CompraDto): CompraDto = compraApi.updateCompra(id, compra)
     suspend fun deleteCompra(id: Int) = compraApi.deleteCompra(id)
 
+
     // CompraDetalle
     suspend fun getCompraDetalles(): List<CompraDetalleDto> = compraDetalleApi.getCompraDetalles()
     suspend fun getCompraDetalle(id: Int): CompraDetalleDto = compraDetalleApi.getCompraDetalle(id)

@@ -13,8 +13,11 @@ data class ClienteDetalleDto(
     val direccion: String = "",
     val imagenPerfil: String = "",
     val notasAdicionales: String = "",
-    val ultimoContacto: String = "", // o Instant si usas kotlinx-datetime
+    val ultimoContacto: String = "",
     val codigoCliente: String = "",
+    val nombreCompleto: String = "",
+    val telefonoFormateado: String = "",
     val direccionCompleta: String = "",
+    // Cambiar a String si el API envía solo el nombre
     val cliente: String = ""
 )

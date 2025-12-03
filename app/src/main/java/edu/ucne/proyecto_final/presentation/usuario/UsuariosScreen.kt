@@ -40,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.ucne.proyecto_final.dto.remote.UsuarioDto
@@ -229,3 +230,18 @@ fun UsuarioCard(
         )
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun UsuarioCardPreview() {
+    UsuarioCard(
+        usuario = UsuarioDto(
+            usuarioId = 1,
+            userName = "Juan Pérez",
+            password = "123"
+        ),
+        onEditClick = {},
+        onDeleteClick = {}
+    )
+}
+

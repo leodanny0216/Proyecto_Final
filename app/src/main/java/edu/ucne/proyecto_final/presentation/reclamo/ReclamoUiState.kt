@@ -1,3 +1,4 @@
+// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
 import edu.ucne.proyecto_final.data.remote.dto.ReclamoDto
@@ -10,7 +11,7 @@ data class ReclamoUiState(
 
     val reclamoId: Int = 0,
     val tipoReclamoId: Int = 0,
-    val tipoReclamoNombre: String = "",
+    val tipoReclamo: String = "",
     val fechaIncidente: String = "",
     val descripcion: String = "",
     val evidencias: List<String> = emptyList(),
