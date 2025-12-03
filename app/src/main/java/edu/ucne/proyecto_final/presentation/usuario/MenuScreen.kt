@@ -123,13 +123,7 @@ fun MenuScreen(
                         onClick = { onMenuItemClick("reclamos") }
                     )
                 }
-                item {
-                    MenuCard(
-                        title = "Reportes",
-                        icon = Icons.Default.Info,
-                        onClick = { /* TODO */ }
-                    )
-                }
+
             }
         }
     }
