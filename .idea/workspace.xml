@@ -9,17 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="CompraViewModel.kt">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="Menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/InsumoDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/InsumoDto.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoUiState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoUiState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/insumo/InsumoViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +21,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=G122023114618284)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -106,7 +98,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "siguiente",
     "settings.editor.selected.configurable": "experimental"
   }
 }]]></component>
@@ -296,7 +288,39 @@
       <option name="project" value="LOCAL" />
       <updated>1764789172083</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="basura">
+      <option name="closed" value="true" />
+      <created>1764790849656</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1764790849656</updated>
+    </task>
+    <task id="LOCAL-00014" summary="InsumoDto.kt">
+      <option name="closed" value="true" />
+      <created>1764790859154</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1764790859155</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Menu">
+      <option name="closed" value="true" />
+      <created>1764790875710</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1764790875710</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Menu">
+      <option name="closed" value="true" />
+      <created>1764791116316</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1764791116316</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -314,9 +338,11 @@
     <MESSAGE value="REDY EL LOGIN" />
     <MESSAGE value="redy" />
     <MESSAGE value="le puse lo proveedor api" />
-    <MESSAGE value="basura" />
     <MESSAGE value="CompraViewModel.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="CompraViewModel.kt" />
+    <MESSAGE value="basura" />
+    <MESSAGE value="InsumoDto.kt" />
+    <MESSAGE value="Menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Menu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
