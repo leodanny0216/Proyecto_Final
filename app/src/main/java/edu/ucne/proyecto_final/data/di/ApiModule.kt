@@ -65,9 +65,6 @@ object ApiModule {
     fun provideUsuarioApi(moshi: Moshi, client: OkHttpClient): UsuarioApi =
         createApi(BASE_URL_HUACALES, moshi, client)
 
-
-
-
     @Provides @Singleton
     fun provideCategoriaApi(moshi: Moshi, client: OkHttpClient): CategoriaApi =
         createApi(BASE_URL_VENTAS, moshi, client)
