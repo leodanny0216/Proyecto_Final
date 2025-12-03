@@ -10,9 +10,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="le puse lo proveedor api">
+      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cadenadesuministro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/categoria.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cliente.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/metododepago.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/reclamos.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tienda.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/usuario.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/di/ApiModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/di/ApiModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraDetalleApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/CompraDetalleApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ReclamoApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/ReclamoApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/RemoteDataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/RemoteDataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDetalleDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDetalleDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDetalleDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDetalleDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/CompraDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ReclamoDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ReclamoDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ReclamoRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/ReclamoRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteListScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteUiState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteUiState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/cliente/ClienteViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraListScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraUiState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraUiState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/compra/CompraViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/AppNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/AppNavigation.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoListScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoUiState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoUiState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/reclamo/ReclamoViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/RegisterScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/RegisterScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/StartScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/StartScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/UsuariosScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/UsuariosScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +115,9 @@
     &quot;accountId&quot;: &quot;5a930b67-8a1f-4acf-86c1-a3b21492584d&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -84,21 +127,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Android App.app.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "Diseno",
-    "settings.editor.selected.configurable": "experimental"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Diseno&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;experimental&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Aplicada\app\src\main\res\drawable" />
+    </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
       <recent name="edu.ucne.proyecto_final.data.remote.dto" />
     </key>
@@ -249,7 +296,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764513473846</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="le puse lo proveedor api">
+      <option name="closed" value="true" />
+      <created>1764516476699</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1764516476699</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,6 +323,20 @@
     <MESSAGE value="redy" />
     <MESSAGE value="le puse lo proveedor api" />
     <option name="LAST_COMMIT_MESSAGE" value="le puse lo proveedor api" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/remote/dto/ClienteDto.kt</url>
+          <line>5</line>
+          <properties class="edu.ucne.proyecto_final.data.remote.dto.ClienteDto" method="&lt;init&gt;">
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
