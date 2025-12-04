@@ -3,7 +3,6 @@ package edu.ucne.proyecto_final.data.remote
 
 import edu.ucne.proyecto_final.data.remote.dto.ReclamoDto
 import retrofit2.http.*
-
 interface ReclamoApi {
     @GET("api/ReclamoDtoes")
     suspend fun getReclamos(): List<ReclamoDto>

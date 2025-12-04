@@ -58,36 +58,30 @@ private val usuarioApi: UsuarioApi,
     suspend fun updateProveedor(id: Int, proveedor: ProveedorDto): ProveedorDto = proveedorApi.updateProveedor(id, proveedor)
     suspend fun deleteProveedor(id: Int) = proveedorApi.deleteProveedor(id)
 
-    // Compra
     suspend fun getCompras(): List<CompraDto> = compraApi.getCompras()
     suspend fun getCompra(id: Int): CompraDto = compraApi.getCompra(id)
     suspend fun createCompra(compra: CompraDto): CompraDto = compraApi.createCompra(compra)
     suspend fun updateCompra(id: Int, compra: CompraDto): CompraDto = compraApi.updateCompra(id, compra)
     suspend fun deleteCompra(id: Int) = compraApi.deleteCompra(id)
 
-
-    // CompraDetalle
     suspend fun getCompraDetalles(): List<CompraDetalleDto> = compraDetalleApi.getCompraDetalles()
     suspend fun getCompraDetalle(id: Int): CompraDetalleDto = compraDetalleApi.getCompraDetalle(id)
     suspend fun createCompraDetalle(detalle: CompraDetalleDto): CompraDetalleDto = compraDetalleApi.createCompraDetalle(detalle)
     suspend fun updateCompraDetalle(id: Int, detalle: CompraDetalleDto): CompraDetalleDto = compraDetalleApi.updateCompraDetalle(id, detalle)
     suspend fun deleteCompraDetalle(id: Int) = compraDetalleApi.deleteCompraDetalle(id)
 
-    // Insumo
     suspend fun getInsumos(): List<InsumoDto> = insumoApi.getInsumos()
     suspend fun getInsumo(id: Int): InsumoDto = insumoApi.getInsumo(id)
     suspend fun createInsumo(insumo: InsumoDto): InsumoDto = insumoApi.createInsumo(insumo)
     suspend fun updateInsumo(id: Int, insumo: InsumoDto): InsumoDto = insumoApi.updateInsumo(id, insumo)
     suspend fun deleteInsumo(id: Int) = insumoApi.deleteInsumo(id)
 
-    // InsumoDetalle
     suspend fun getInsumoDetalles(): List<InsumoDetalleDto> = insumoDetalleApi.getInsumoDetalles()
     suspend fun getInsumoDetalle(id: Int): InsumoDetalleDto = insumoDetalleApi.getInsumoDetalle(id)
     suspend fun createInsumoDetalle(detalle: InsumoDetalleDto): InsumoDetalleDto = insumoDetalleApi.createInsumoDetalle(detalle)
     suspend fun updateInsumoDetalle(id: Int, detalle: InsumoDetalleDto): InsumoDetalleDto = insumoDetalleApi.updateInsumoDetalle(id, detalle)
     suspend fun deleteInsumoDetalle(id: Int) = insumoDetalleApi.deleteInsumoDetalle(id)
 
-    // Reclamo
     suspend fun getReclamos(): List<ReclamoDto> = reclamoApi.getReclamos()
     suspend fun getReclamo(id: Int): ReclamoDto = reclamoApi.getReclamo(id)
     suspend fun createReclamo(reclamo: ReclamoDto): ReclamoDto = reclamoApi.createReclamo(reclamo)
