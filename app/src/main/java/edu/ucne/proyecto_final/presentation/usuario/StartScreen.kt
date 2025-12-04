@@ -60,8 +60,6 @@ fun StartScreen(
             ),
         contentAlignment = Alignment.Center
     ) {
-
-        // --- Glow detrás del logo ---
         Box(
             modifier = Modifier
                 .size(200.dp)
@@ -75,8 +73,6 @@ fun StartScreen(
                     )
                 )
         )
-
-        // --- Tarjeta suave estilo neón ---
         Box(
             modifier = Modifier
                 .size(170.dp)
