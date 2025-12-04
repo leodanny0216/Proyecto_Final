@@ -10,3 +10,4 @@ data class ProveedorDto(
     val email: String = "",
     val direccion: String = ""
 )
+
