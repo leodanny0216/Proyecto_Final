@@ -2,7 +2,6 @@ package edu.ucne.proyecto_final.data.remote.dto
 
 import edu.ucne.proyecto_final.dto.remote.ProveedorDto
 import kotlinx.serialization.Serializable
-
 @Serializable
 data class CompraDto(
     val compraId: Int = 0,
