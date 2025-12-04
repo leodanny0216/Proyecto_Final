@@ -27,3 +27,4 @@ interface CompraDetalleApi {
     @DELETE("api/CompraDetalleDtoes/{id}")
     suspend fun deleteCompraDetalle(@Path("id") id: Int)
 }
+
