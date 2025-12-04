@@ -48,7 +48,6 @@ fun CrearUsuarioScreen(
     val uiState by viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    // Observar el estado de éxito para navegar
     LaunchedEffect(uiState.successMessage) {
         if (uiState.successMessage != null && uiState.successMessage!!.contains("creado")) {
             onUsuarioCreado()
