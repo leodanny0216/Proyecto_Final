@@ -154,7 +154,6 @@ fun EditarUsuarioScreen(
         }
     }
 
-    // Diálogo de confirmación para eliminar
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
