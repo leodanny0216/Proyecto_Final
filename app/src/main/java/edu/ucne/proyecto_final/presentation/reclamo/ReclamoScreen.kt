@@ -16,7 +16,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-// Modelo temporal para tipos de reclamo
 data class TipoReclamoSimple(val id: Int, val nombre: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +38,6 @@ fun ReclamoScreen(
     var showAddEvidenciaDialog by remember { mutableStateOf(false) }
     var fechaManual by remember { mutableStateOf("") }
 
-    // Inicializar fechaManual con el valor actual del estado
     LaunchedEffect(uiState.fechaIncidente) {
         fechaManual = uiState.fechaIncidente
     }
@@ -77,7 +75,6 @@ fun ReclamoScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Mensajes de error
             item {
                 uiState.errorMessage?.let { error ->
                     Card(
@@ -102,7 +99,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Mensaje de éxito
             item {
                 uiState.successMessage?.let { message ->
                     Card(
@@ -131,7 +127,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Selección de tipo de reclamo
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -163,7 +158,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Campo de fecha del incidente (ingreso manual)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -221,7 +215,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Descripción del reclamo
             item {
                 Column {
                     OutlinedTextField(
@@ -245,7 +238,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Evidencias
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -323,7 +315,6 @@ fun ReclamoScreen(
                 }
             }
 
-            // Botones de acción
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -374,7 +365,6 @@ fun ReclamoScreen(
         }
     }
 
-    // Diálogo para seleccionar tipo de reclamo
     if (showTipoDialog) {
         AlertDialog(
             onDismissRequest = { showTipoDialog = false },
@@ -444,10 +434,8 @@ fun ReclamoScreen(
     }
 }
 
-// Función para validar el formato de fecha
 fun esFechaValida(fecha: String): Boolean {
     return try {
-        // Validar formato YYYY-MM-DD
         if (!Regex("^\\d{4}-\\d{2}-\\d{2}\$").matches(fecha)) {
             return false
         }
@@ -459,12 +447,10 @@ fun esFechaValida(fecha: String): Boolean {
         val mes = partes[1].toInt()
         val dia = partes[2].toInt()
 
-        // Validaciones básicas
         if (mes < 1 || mes > 12) return false
         if (dia < 1 || dia > 31) return false
         if (anio < 1900 || anio > 2100) return false
 
-        // Validar días según el mes
         when (mes) {
             2 -> {
                 val esBisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0)
