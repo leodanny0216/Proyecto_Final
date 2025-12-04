@@ -23,15 +23,9 @@ import javax.net.ssl.X509TrustManager
 @Module
 object ApiModule {
 
-    // -----------------------------
-    // URLs SEPARADAS
-    // -----------------------------
     private const val BASE_URL_HUACALES = "https://gestionhuacalesapi.azurewebsites.net/"
     private const val BASE_URL_VENTAS = "https://ventasever.azurewebsites.net/"
 
-    // -----------------------------
-    // Moshi
-    // -----------------------------
     @Provides
     @Singleton
     fun provideMoshi(): Moshi =
@@ -39,9 +33,6 @@ object ApiModule {
             .add(KotlinJsonAdapterFactory())
             .build()
 
-    // -----------------------------
-    // OkHttp
-    // -----------------------------
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -57,9 +48,6 @@ object ApiModule {
             .build()
     }
 
-    // -----------------------------
-    // Función para crear APIs
-    // -----------------------------
     private inline fun <reified T> createApi(
         baseUrl: String,
         moshi: Moshi,
@@ -73,15 +61,9 @@ object ApiModule {
             .create(T::class.java)
 
 
-    // ============================================================
-    // APIs QUE USA GESTIONHUACALESAPI
-    // ============================================================
-
     @Provides @Singleton
     fun provideUsuarioApi(moshi: Moshi, client: OkHttpClient): UsuarioApi =
         createApi(BASE_URL_HUACALES, moshi, client)
-
-
 
 
     @Provides @Singleton
@@ -120,16 +102,4 @@ object ApiModule {
     fun provideReclamoApi(moshi: Moshi, client: OkHttpClient): ReclamoApi =
         createApi(BASE_URL_VENTAS, moshi, client)
 
-
-    // ============================================================
-    // APIs QUE USES DE VENTASEVER (si quieres agregar)
-    // ============================================================
-
-    // EJEMPLO:
-    /*
-    @Provides
-    @Singleton
-    fun provideVentaApi(moshi: Moshi, client: OkHttpClient): VentaApi =
-        createApi(BASE_URL_VENTAS, moshi, client)
-    */
 }
