@@ -1,4 +1,4 @@
-// package edu.ucne.proyecto_final.data.remote.dto
+
 package edu.ucne.proyecto_final.data.remote.dto
 
 import kotlinx.serialization.Serializable
