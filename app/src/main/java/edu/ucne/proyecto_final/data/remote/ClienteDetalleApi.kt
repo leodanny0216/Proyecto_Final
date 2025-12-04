@@ -1,5 +1,4 @@
 package edu.ucne.proyecto_final.data.remote
-
 import edu.ucne.proyecto_final.data.remote.dto.ClienteDetalleDto
 import retrofit2.http.Body
 import retrofit2.http.DELETE
