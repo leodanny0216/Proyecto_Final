@@ -13,3 +13,4 @@ interface InsumoApi {
     @PUT("api/InsumoDtoes/{id}") suspend fun updateInsumo(@Path("id") id: Int, @Body insumo: InsumoDto): InsumoDto
     @DELETE("api/InsumoDtoes/{id}") suspend fun deleteInsumo(@Path("id") id: Int)
 }
+
