@@ -44,7 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.ucne.proyecto_final.dto.remote.UsuarioDto
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsuariosScreen(
@@ -89,7 +88,6 @@ fun UsuariosScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            // Barra de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
