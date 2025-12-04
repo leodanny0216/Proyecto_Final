@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-// Modelos temporales para categorías y proveedores
 data class CategoriaSimple(val id: Int, val nombre: String)
 data class ProveedorSimple(val id: Int, val nombre: String)
 
@@ -22,8 +21,8 @@ fun InsumoScreen(
     viewModel: InsumoViewModel = hiltViewModel(),
     insumoId: Int = 0,
     onNavigateBack: () -> Unit,
-    categorias: List<CategoriaSimple> = emptyList(), // Deberían venir de un CategoriaViewModel
-    proveedores: List<ProveedorSimple> = emptyList() // Deberían venir de un ProveedorViewModel
+    categorias: List<CategoriaSimple> = emptyList(),
+    proveedores: List<ProveedorSimple> = emptyList()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showCategoriaDialog by remember { mutableStateOf(false) }
@@ -62,7 +61,6 @@ fun InsumoScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Mensajes de error
             item {
                 uiState.errorMessage?.let { error ->
                     Card(
@@ -87,7 +85,6 @@ fun InsumoScreen(
                 }
             }
 
-            // Mensaje de éxito
             item {
                 uiState.successMessage?.let { message ->
                     Card(
@@ -116,7 +113,6 @@ fun InsumoScreen(
                 }
             }
 
-            // Campo de nombre
             item {
                 OutlinedTextField(
                     value = uiState.nombre,
@@ -128,7 +124,6 @@ fun InsumoScreen(
                 )
             }
 
-            // Selección de categoría
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -160,7 +155,6 @@ fun InsumoScreen(
                 }
             }
 
-            // Selección de proveedor
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -192,7 +186,6 @@ fun InsumoScreen(
                 }
             }
 
-            // Campo de stock inicial
             item {
                 OutlinedTextField(
                     value = if (uiState.stockInicial == 0) "" else uiState.stockInicial.toString(),
@@ -207,7 +200,6 @@ fun InsumoScreen(
                 )
             }
 
-            // Botones de acción
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -247,8 +239,6 @@ fun InsumoScreen(
             }
         }
     }
-
-    // Diálogo para seleccionar categoría
     if (showCategoriaDialog) {
         AlertDialog(
             onDismissRequest = { showCategoriaDialog = false },
@@ -280,7 +270,6 @@ fun InsumoScreen(
         )
     }
 
-    // Diálogo para seleccionar proveedor
     if (showProveedorDialog) {
         AlertDialog(
             onDismissRequest = { showProveedorDialog = false },
