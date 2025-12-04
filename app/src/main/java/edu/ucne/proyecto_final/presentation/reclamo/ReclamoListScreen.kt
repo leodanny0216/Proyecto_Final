@@ -50,7 +50,6 @@ fun ReclamoListScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // Barra de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
@@ -69,7 +68,6 @@ fun ReclamoListScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Mensajes
             uiState.errorReclamos?.let { error ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -120,7 +118,6 @@ fun ReclamoListScreen(
                 }
             }
 
-            // Lista de reclamos
             when {
                 uiState.isLoadingReclamos -> {
                     Box(
@@ -170,7 +167,6 @@ fun ReclamoListScreen(
         }
     }
 
-    // Diálogo de confirmación de eliminación
     showDeleteDialog?.let { reclamo ->
         AlertDialog(
             onDismissRequest = { showDeleteDialog = null },
