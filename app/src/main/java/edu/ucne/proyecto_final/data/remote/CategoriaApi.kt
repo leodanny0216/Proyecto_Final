@@ -14,4 +14,5 @@ interface CategoriaApi {
     @POST("api/CategoriaDtoes") suspend fun createCategoria(@Body categoria: CategoriaDto): CategoriaDto
     @PUT("api/CategoriaDtoes/{id}") suspend fun updateCategoria(@Path("id") id: Int, @Body categoria: CategoriaDto): CategoriaDto
     @DELETE("api/CategoriaDtoes/{id}") suspend fun deleteCategoria(@Path("id") id: Int)
+
 }
