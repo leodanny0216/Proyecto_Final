@@ -1,7 +1,6 @@
 package edu.ucne.proyecto_final.data.remote.dto
 
 import kotlinx.serialization.Serializable
-
 @Serializable
 data class InsumoDto(
     val insumoId: Int = 0,
