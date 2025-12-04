@@ -18,6 +18,5 @@ data class ClienteDetalleDto(
     val nombreCompleto: String = "",
     val telefonoFormateado: String = "",
     val direccionCompleta: String = "",
-    // Cambiar a String si el API envía solo el nombre
     val cliente: String = ""
 )
