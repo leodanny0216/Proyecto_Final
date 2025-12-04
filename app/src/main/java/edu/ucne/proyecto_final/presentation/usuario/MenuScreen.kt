@@ -134,7 +134,6 @@ fun MenuScreen(
         }
     }
 
-    // Diálogo de confirmación de cierre de sesión
     if (showLogoutDialog) {
         AlertDialog(
             onDismissRequest = { showLogoutDialog = false },
