@@ -1,6 +1,5 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,13 +17,10 @@ import javax.inject.Inject
 class UsuarioViewModel @Inject constructor(
     private val repository: UsuarioRepository
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(UsuarioUiState())
     val uiState: StateFlow<UsuarioUiState> = _uiState.asStateFlow()
-
     private val _usuarioState = MutableStateFlow<Resource<UsuarioDto>?>(null)
     val usuarioState: StateFlow<Resource<UsuarioDto>?> = _usuarioState.asStateFlow()
-
     private val _usuariosState = MutableStateFlow<Resource<List<UsuarioDto>>>(Resource.Loading())
     val usuariosState: StateFlow<Resource<List<UsuarioDto>>> = _usuariosState.asStateFlow()
 
@@ -186,7 +182,6 @@ class UsuarioViewModel @Inject constructor(
             }
         }
     }
-
     fun updateUsuario() {
         val currentState = _uiState.value
 
@@ -237,7 +232,6 @@ class UsuarioViewModel @Inject constructor(
             }
         }
     }
-
     fun deleteUsuario(id: Int) {
         _uiState.update { it.copy(isDeleting = true, errorMessage = null) }
 

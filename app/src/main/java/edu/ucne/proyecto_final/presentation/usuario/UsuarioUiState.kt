@@ -1,6 +1,5 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-
 import edu.ucne.proyecto_final.dto.remote.UsuarioDto
 
 data class UsuarioUiState(
