@@ -49,7 +49,6 @@ fun InsumoListScreen(
                 .padding(paddingValues)
                 .padding(16.dp)
         ) {
-            // Barra de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
@@ -122,7 +121,6 @@ fun InsumoListScreen(
                 }
             }
 
-            // Lista de insumos
             when {
                 uiState.isLoadingInsumos -> {
                     Box(
@@ -172,7 +170,6 @@ fun InsumoListScreen(
         }
     }
 
-    // Diálogo de confirmación de eliminación
     showDeleteDialog?.let { insumo ->
         AlertDialog(
             onDismissRequest = { showDeleteDialog = null },
