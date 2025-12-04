@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-
 interface ClienteApi {
     @GET("api/ClienteDtoes") suspend fun getClientes(): List<ClienteDto>
     @GET("api/ClienteDtoes/{id}") suspend fun getCliente(@Path("id") id: Int): ClienteDto
