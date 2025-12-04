@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import dagger.hilt.android.AndroidEntryPoint
 import edu.ucne.proyecto_final.presentation.navegation.AppNavigation
 import edu.ucne.proyecto_final.ui.theme.Proyecto_FinalTheme
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
