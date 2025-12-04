@@ -109,13 +109,10 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    // Simular login exitoso
+
                     if (uiState.userName.isNotBlank() && uiState.password.isNotBlank()) {
-                        // En una app real, aquí validarías con el backend
-                        // Por ahora usamos un ID temporal
                         onLoginClick(1)
                     } else {
-                        // Mostrar error
                         viewModel.uiState.value.copy(
                             errorMessage = "Usuario y contraseña requeridos"
                         )
