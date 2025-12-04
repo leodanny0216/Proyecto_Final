@@ -1,6 +1,5 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -47,7 +46,6 @@ fun RegisterScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    // Observar si el registro fue exitoso
     LaunchedEffect(uiState.successMessage) {
         if (uiState.successMessage != null && uiState.successMessage!!.contains("creado")) {
             onRegisterClick()
