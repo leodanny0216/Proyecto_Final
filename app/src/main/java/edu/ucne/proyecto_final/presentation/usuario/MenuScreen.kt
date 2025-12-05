@@ -1,14 +1,19 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,105 +35,74 @@ fun MenuScreen(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        "Menú Principal",
-                        fontWeight = FontWeight.Bold
+                        "Dashboard",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
                 },
                 actions = {
                     IconButton(onClick = { usuarioId?.let { onNavigateToPerfil(it) } }) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Perfil"
-                        )
+                        Icon(Icons.Default.Person, contentDescription = "Perfil", tint = Color.White)
                     }
                     IconButton(onClick = { showLogoutDialog = true }) {
-                        Icon(
-                            imageVector = Icons.Default.ExitToApp,
-                            contentDescription = "Cerrar sesión",
-                            tint = MaterialTheme.colorScheme.error
-                        )
+                        Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión", tint = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = Color(0xFF4CAF50) // Verde principal
                 )
             )
-        }
+        },
+        containerColor = Color.White
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(innerPadding)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFFE8F5E9),
+                            Color.White
+                        )
+                    )
+                )
         ) {
-            Text(
-                text = "Bienvenido al Sistema",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
-
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxSize()
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
             ) {
-                item {
-                    MenuCard(
-                        title = "Usuarios",
-                        icon = Icons.Default.Person,
-                        onClick = { onMenuItemClick("usuarios") }
+                Text(
+                    text = "Bienvenido al Sistema",
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color(0xFF2E7D32),
+                    modifier = Modifier.padding(bottom = 24.dp)
+                )
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val dashboardItems = listOf(
+                        "Usuarios" to Icons.Default.Person,
+                        "categorias" to Icons.Default.List,
+                        "Clientes" to Icons.Default.AccountBox,
+                        "Proveedores" to Icons.Default.ShoppingCart,
+                        "Compras" to Icons.Default.ShoppingCart,
+                        "Insumos" to Icons.Default.Build,
+                        "Reclamos" to Icons.Default.Warning
                     )
-                }
-                item {
-                    MenuCard(
-                        title = "Categorías",
-                        icon = Icons.Default.List,
-                        onClick = { onMenuItemClick("categorias") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Clientes",
-                        icon = Icons.Default.AccountBox,
-                        onClick = { onMenuItemClick("clientes") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Proveedores",
-                        icon = Icons.Default.ShoppingCart,
-                        onClick = { onMenuItemClick("proveedores") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Compras",
-                        icon = Icons.Default.ShoppingCart,
-                        onClick = { onMenuItemClick("compras") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Insumos",
-                        icon = Icons.Default.Build,
-                        onClick = { onMenuItemClick("insumos") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Reclamos",
-                        icon = Icons.Default.Warning,
-                        onClick = { onMenuItemClick("reclamos") }
-                    )
-                }
-                item {
-                    MenuCard(
-                        title = "Reportes",
-                        icon = Icons.Default.Info,
-                        onClick = { /* TODO */ }
-                    )
+
+                    items(dashboardItems.size) { index ->
+                        val item = dashboardItems[index]
+                        MenuCard(title = item.first, icon = item.second) {
+                            onMenuItemClick(item.first.lowercase())
+                        }
+                    }
                 }
             }
         }
@@ -146,16 +120,12 @@ fun MenuScreen(
                         onLogoutClick()
                     },
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.error
+                        contentColor = Color(0xFFD32F2F)
                     )
-                ) {
-                    Text("Cerrar Sesión")
-                }
+                ) { Text("Cerrar Sesión") }
             },
             dismissButton = {
-                TextButton(onClick = { showLogoutDialog = false }) {
-                    Text("Cancelar")
-                }
+                TextButton(onClick = { showLogoutDialog = false }) { Text("Cancelar") }
             }
         )
     }
@@ -171,11 +141,12 @@ fun MenuCard(
         onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .aspectRatio(1f),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            .aspectRatio(1f)
+            .shadow(8.dp, shape = RoundedCornerShape(20.dp)),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+            containerColor = Color(0xFFC8E6C9) // Verde suave
+        ),
+        shape = RoundedCornerShape(20.dp)
     ) {
         Column(
             modifier = Modifier
@@ -187,15 +158,15 @@ fun MenuCard(
             Icon(
                 imageVector = icon,
                 contentDescription = title,
-                modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                modifier = Modifier.size(64.dp),
+                tint = Color(0xFF2E7D32) // Verde oscuro
             )
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF2E7D32),
                 textAlign = TextAlign.Center
             )
         }
