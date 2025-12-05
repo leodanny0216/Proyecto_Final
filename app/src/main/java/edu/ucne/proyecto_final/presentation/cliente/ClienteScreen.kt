@@ -1,5 +1,6 @@
 package edu.ucne.proyecto_final.presentation.cliente
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,7 @@ fun ClienteScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
+    val greenColor = Color(0xFF4CAF50)
 
     Scaffold(
         topBar = {
@@ -33,12 +36,13 @@ fun ClienteScreen(
                 title = {
                     Text(
                         "Gestión de Clientes",
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = greenColor,
+                    titleContentColor = Color.White
                 )
             )
         }
@@ -46,6 +50,7 @@ fun ClienteScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color(0xFFF5F5F5))
                 .padding(padding)
         ) {
             Column(
@@ -61,7 +66,7 @@ fun ClienteScreen(
                             .fillMaxWidth()
                             .padding(bottom = 12.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF4CAF50).copy(alpha = 0.1f)
+                            containerColor = greenColor.copy(alpha = 0.1f)
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
@@ -74,12 +79,12 @@ fun ClienteScreen(
                             Icon(
                                 Icons.Default.CheckCircle,
                                 contentDescription = null,
-                                tint = Color(0xFF4CAF50)
+                                tint = greenColor
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
                                 text = message,
-                                color = Color(0xFF4CAF50),
+                                color = greenColor,
                                 fontWeight = FontWeight.Medium
                             )
                         }
@@ -92,7 +97,7 @@ fun ClienteScreen(
                             .fillMaxWidth()
                             .padding(bottom = 12.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
+                            containerColor = Color(0xFFFFCDD2)
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
@@ -105,176 +110,136 @@ fun ClienteScreen(
                             Icon(
                                 Icons.Default.Warning,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.error
+                                tint = Color(0xFFD32F2F)
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
                                 text = message,
-                                color = MaterialTheme.colorScheme.error,
+                                color = Color(0xFFD32F2F),
                                 fontWeight = FontWeight.Medium
                             )
                         }
                     }
                 }
 
-                // Card del formulario principal
+                // Card principal del formulario
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                    shape = RoundedCornerShape(16.dp)
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    shape = RoundedCornerShape(20.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(20.dp)
+                            .background(
+                                Brush.verticalGradient(
+                                    colors = listOf(Color.White, Color(0xFFE8F5E9))
+                                )
+                            )
+                            .padding(24.dp)
                     ) {
                         Text(
                             text = if (uiState.clienteId == 0) "Nuevo Cliente" else "Editar Cliente #${uiState.clienteId}",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
+                            color = greenColor
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Nombre
+                        // Campos de texto con verde
+                        val outlinedColors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = greenColor,
+                            unfocusedBorderColor = greenColor.copy(alpha = 0.5f),
+                            focusedLabelColor = greenColor,
+                            cursorColor = greenColor
+                        )
+
                         OutlinedTextField(
                             value = uiState.nombre,
                             onValueChange = { viewModel.setNombre(it) },
                             label = { Text("Nombre *") },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Person,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = greenColor) },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                            )
+                            colors = outlinedColors
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Apellido
                         OutlinedTextField(
                             value = uiState.apellido,
                             onValueChange = { viewModel.setApellido(it) },
                             label = { Text("Apellido *") },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Person,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.Person, contentDescription = null, tint = greenColor) },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                            )
+                            colors = outlinedColors
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Teléfono
                         OutlinedTextField(
                             value = uiState.numeroTelefono,
                             onValueChange = { viewModel.setNumeroTelefono(it) },
                             label = { Text("Teléfono") },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Phone,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.Phone, contentDescription = null, tint = greenColor) },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                            )
+                            colors = outlinedColors
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Correo
                         OutlinedTextField(
                             value = uiState.correoElectronico,
                             onValueChange = { viewModel.setCorreoElectronico(it) },
                             label = { Text("Correo electrónico") },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Email,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.Email, contentDescription = null, tint = greenColor) },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                            )
+                            colors = outlinedColors
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Dirección
                         OutlinedTextField(
                             value = uiState.direccion,
                             onValueChange = { viewModel.setDireccion(it) },
                             label = { Text("Dirección") },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.Home,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.Home, contentDescription = null, tint = greenColor) },
                             modifier = Modifier.fillMaxWidth(),
                             minLines = 2,
                             maxLines = 3,
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                            )
+                            colors = outlinedColors
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Sección de detalles
+                        // Detalles del cliente
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    Icons.Default.Info,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
-                                )
+                                Icon(Icons.Default.Info, contentDescription = null, tint = greenColor)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     text = "Detalles del Cliente",
                                     style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = greenColor
                                 )
                             }
 
                             Badge(
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = greenColor
                             ) {
                                 Text(
                                     text = "${uiState.detalles.size}",
-                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    color = Color.White,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -282,14 +247,13 @@ fun ClienteScreen(
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Lista de detalles
                         if (uiState.detalles.isNotEmpty()) {
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .heightIn(max = 250.dp),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                                    containerColor = Color.White.copy(alpha = 0.8f)
                                 ),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
@@ -310,7 +274,7 @@ fun ClienteScreen(
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
                                 colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)
+                                    containerColor = Color.White.copy(alpha = 0.6f)
                                 ),
                                 shape = RoundedCornerShape(12.dp)
                             ) {
@@ -324,13 +288,13 @@ fun ClienteScreen(
                                         Icons.Default.Info,
                                         contentDescription = null,
                                         modifier = Modifier.size(48.dp),
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                        tint = greenColor.copy(alpha = 0.6f)
                                     )
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(
                                         text = "No hay detalles agregados",
                                         style = MaterialTheme.typography.bodyLarge,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = greenColor.copy(alpha = 0.6f)
                                     )
                                 }
                             }
@@ -338,50 +302,44 @@ fun ClienteScreen(
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Botón para agregar detalle
                         OutlinedButton(
                             onClick = { viewModel.toggleDetalleDialog() },
                             modifier = Modifier.fillMaxWidth(),
                             shape = RoundedCornerShape(12.dp),
-                            enabled = uiState.clienteGuardado
+                            enabled = uiState.clienteGuardado,
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = greenColor
+                            )
                         ) {
                             Icon(Icons.Default.Add, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                if (uiState.clienteGuardado)
-                                    "Agregar Detalle"
-                                else
-                                    "Guarda el cliente primero"
+                                if (uiState.clienteGuardado) "Agregar Detalle" else "Guarda el cliente primero",
+                                fontWeight = FontWeight.Bold
                             )
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        // Botones de acción
+                        // Botones Crear/Actualizar y Limpiar
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            // Botón Crear/Actualizar
                             Button(
                                 onClick = {
-                                    if (uiState.clienteId == 0) {
-                                        viewModel.createCliente()
-                                    } else {
-                                        viewModel.updateCliente()
-                                    }
+                                    if (uiState.clienteId == 0) viewModel.createCliente()
+                                    else viewModel.updateCliente()
                                 },
                                 modifier = Modifier.weight(1f),
                                 enabled = !uiState.isCreating && !uiState.isUpdating,
                                 shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
-                                )
+                                colors = ButtonDefaults.buttonColors(containerColor = greenColor)
                             ) {
                                 if (uiState.isCreating || uiState.isUpdating) {
                                     CircularProgressIndicator(
                                         modifier = Modifier.size(20.dp),
-                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        color = Color.White,
                                         strokeWidth = 2.dp
                                     )
                                 } else {
@@ -397,11 +355,11 @@ fun ClienteScreen(
                                 }
                             }
 
-                            // Botón Limpiar
                             OutlinedButton(
                                 onClick = { viewModel.clearForm() },
                                 modifier = Modifier.weight(1f),
-                                shape = RoundedCornerShape(12.dp)
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.outlinedButtonColors(contentColor = greenColor)
                             ) {
                                 Icon(Icons.Default.Clear, contentDescription = null)
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -409,7 +367,7 @@ fun ClienteScreen(
                             }
                         }
 
-                        // Botón Eliminar (solo si está editando)
+                        // Botón eliminar
                         if (uiState.clienteId != 0) {
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(
@@ -417,14 +375,12 @@ fun ClienteScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 enabled = !uiState.isDeleting,
                                 shape = RoundedCornerShape(12.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.error
-                                )
+                                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD32F2F))
                             ) {
                                 if (uiState.isDeleting) {
                                     CircularProgressIndicator(
                                         modifier = Modifier.size(20.dp),
-                                        color = MaterialTheme.colorScheme.onError,
+                                        color = Color.White,
                                         strokeWidth = 2.dp
                                     )
                                 } else {
@@ -452,7 +408,6 @@ fun ClienteScreen(
             }
         }
 
-        // Diálogo para agregar detalle - CORREGIDO
         if (uiState.showDetalleDialog) {
             DetalleDialog(
                 uiState = uiState,
@@ -463,6 +418,7 @@ fun ClienteScreen(
         }
     }
 }
+
 
 @Composable
 fun DetalleItemCard(
@@ -580,7 +536,7 @@ fun DetalleItemCard(
     }
 }
 
-// ⬇️ DIÁLOGO CORREGIDO - USA Dialog EN VEZ DE AlertDialog
+// ⬇DIÁLOGO CORREGIDO - USA Dialog EN VEZ DE AlertDialog
 @Composable
 fun DetalleDialog(
     uiState: ClienteUiState,
