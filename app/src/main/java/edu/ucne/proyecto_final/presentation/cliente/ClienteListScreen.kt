@@ -29,14 +29,16 @@ fun ClienteListScreen(
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        shape = RoundedCornerShape(16.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
+            // Encabezado
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -70,6 +72,7 @@ fun ClienteListScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Campo de búsqueda
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
@@ -87,7 +90,8 @@ fun ClienteListScreen(
                         IconButton(onClick = { viewModel.setSearchQuery("") }) {
                             Icon(
                                 Icons.Default.Clear,
-                                contentDescription = "Limpiar búsqueda"
+                                contentDescription = "Limpiar búsqueda",
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -97,7 +101,9 @@ fun ClienteListScreen(
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = MaterialTheme.colorScheme.primary,
-                    unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                    unfocusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary
                 )
             )
 
@@ -117,7 +123,7 @@ fun ClienteListScreen(
                             Text(
                                 text = "Cargando clientes...",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
                             )
                         }
                     }
@@ -126,9 +132,7 @@ fun ClienteListScreen(
                 uiState.errorClientes != null -> {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
-                        ),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Column(
@@ -236,13 +240,13 @@ fun ClienteListItem(
     Card(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 0.dp,
-            pressedElevation = 2.dp
+            defaultElevation = 2.dp,
+            pressedElevation = 6.dp
         ),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -316,7 +320,6 @@ fun ClienteListItem(
                     }
                 }
 
-                // ⬅️ MANEJO DE NULL AQUÍ
                 val cantidadDetalles = cliente.detalles?.size ?: 0
                 if (cantidadDetalles > 0) {
                     Spacer(modifier = Modifier.height(6.dp))
