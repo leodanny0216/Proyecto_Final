@@ -1,35 +1,20 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,19 +43,29 @@ fun RegisterScreen(
                 title = { Text("Registro") },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Volver"
-                        )
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF4CAF50),
+                    titleContentColor = Color.White
+                )
             )
-        }
+        },
+        containerColor = Color.White
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
+                .padding(innerPadding)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFFE8F5E9),
+                            Color.White
+                        )
+                    )
+                )
                 .padding(32.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -78,79 +73,64 @@ fun RegisterScreen(
             Text(
                 text = "Crear Cuenta",
                 style = MaterialTheme.typography.headlineMedium,
+                color = Color(0xFF2E7D32),
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
+            // Usuario
             OutlinedTextField(
                 value = uiState.userName,
                 onValueChange = { viewModel.setUserName(it) },
                 label = { Text("Nombre de usuario") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                shape = RoundedCornerShape(16.dp),
+
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Contraseña
             OutlinedTextField(
                 value = uiState.password,
                 onValueChange = { viewModel.setPassword(it) },
                 label = { Text("Contraseña") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                visualTransformation = if (uiState.passwordVisible) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (uiState.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { viewModel.togglePasswordVisibility() }) {
                         Icon(
-                            imageVector = if (uiState.passwordVisible) {
-                                Icons.Default.Lock
-                            } else {
-                                Icons.Default.Lock
-                            },
-                            contentDescription = if (uiState.passwordVisible) {
-                                "Ocultar contraseña"
-                            } else {
-                                "Mostrar contraseña"
-                            }
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = if (uiState.passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                            tint = Color(0xFF2E7D32)
                         )
                     }
-                }
+                },
+                shape = RoundedCornerShape(16.dp),
+
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Confirmar contraseña
             OutlinedTextField(
                 value = uiState.confirmarPassword,
                 onValueChange = { viewModel.setConfirmarPassword(it) },
                 label = { Text("Confirmar contraseña") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
-                visualTransformation = if (uiState.confirmarPasswordVisible) {
-                    VisualTransformation.None
-                } else {
-                    PasswordVisualTransformation()
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = if (uiState.confirmarPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { viewModel.toggleConfirmarPasswordVisibility() }) {
                         Icon(
-                            imageVector = if (uiState.confirmarPasswordVisible) {
-                                Icons.Default.Lock
-                            } else {
-                                Icons.Default.Lock
-                            },
-                            contentDescription = if (uiState.confirmarPasswordVisible) {
-                                "Ocultar contraseña"
-                            } else {
-                                "Mostrar contraseña"
-                            }
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = if (uiState.confirmarPasswordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                            tint = Color(0xFF2E7D32)
                         )
                     }
-                }
+                },
+                shape = RoundedCornerShape(16.dp),
             )
 
             uiState.errorMessage?.let { error ->
@@ -164,17 +144,23 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Botón Registrar
             Button(
                 onClick = { viewModel.createUsuario() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF4CAF50),
+                    contentColor = Color.White
+                ),
                 enabled = !uiState.isCreating
             ) {
                 if (uiState.isCreating) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(20.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = Color.White
                     )
                 } else {
                     Text("Registrarse")
@@ -184,7 +170,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             TextButton(onClick = onNavigateToLogin) {
-                Text("¿Ya tienes cuenta? Inicia Sesión")
+                Text("¿Ya tienes cuenta? Inicia Sesión", color = Color(0xFF2E7D32))
             }
         }
     }
