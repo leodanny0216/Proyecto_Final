@@ -9,10 +9,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="CompraViewModel.kt">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    <list default="true" id="c30647e7-cb41-44d1-b24f-33aaa62d7e00" name="Changes" comment="ViewModel de Reclamo">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/local/dao/UsuarioDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/local/entities/UsuarioEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/local/s" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/mapper/UsuarioMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/UsuarioRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/data/repository/UsuarioRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/Screen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/navegation/Screen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/RegisterScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/RegisterScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/StartScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/StartScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/UsuariosScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucne/proyecto_final/presentation/usuario/UsuariosScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,10 +56,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin File" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
-        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -195,103 +203,399 @@
       <option name="presentableId" value="Default" />
       <updated>1763555893363</updated>
     </task>
-    <task id="LOCAL-00001" summary="REDY EL LOGIN">
+    <task id="LOCAL-00062" summary=" CategoriaRepository.kt mejore">
       <option name="closed" value="true" />
-      <created>1763568144331</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+      <created>1764906986207</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
       <option name="project" value="LOCAL" />
-      <updated>1763568144331</updated>
+      <updated>1764906986207</updated>
     </task>
-    <task id="LOCAL-00002" summary="REDY EL LOGIN">
+    <task id="LOCAL-00063" summary=" CategoriaScreen.kt mejore">
       <option name="closed" value="true" />
-      <created>1763568160538</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+      <created>1764907098017</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
       <option name="project" value="LOCAL" />
-      <updated>1763568160538</updated>
+      <updated>1764907098017</updated>
     </task>
-    <task id="LOCAL-00003" summary="REDY EL LOGIN">
+    <task id="LOCAL-00064" summary="mejore la  CategoriaViewModel.kt.kt">
       <option name="closed" value="true" />
-      <created>1763589042853</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+      <created>1764907147511</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
       <option name="project" value="LOCAL" />
-      <updated>1763589042853</updated>
+      <updated>1764907147511</updated>
     </task>
-    <task id="LOCAL-00004" summary="REDY EL LOGIN">
+    <task id="LOCAL-00065" summary=" Interfaz de acceso a datos para operaciones de Cliente">
       <option name="closed" value="true" />
-      <created>1763589082914</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
+      <created>1764907447759</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
       <option name="project" value="LOCAL" />
-      <updated>1763589082914</updated>
+      <updated>1764907447759</updated>
     </task>
-    <task id="LOCAL-00005" summary="REDY EL LOGIN">
+    <task id="LOCAL-00066" summary=" ClienteDetalleDao.kt - DAO para operaciones de detalle de Cliente">
       <option name="closed" value="true" />
-      <created>1763592631259</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
+      <created>1764907478875</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
       <option name="project" value="LOCAL" />
-      <updated>1763592631259</updated>
+      <updated>1764907478875</updated>
     </task>
-    <task id="LOCAL-00006" summary="redy">
+    <task id="LOCAL-00067" summary="ClienteDetalleEntity.kt - Entidad de base de datos para detalles de Cliente">
       <option name="closed" value="true" />
-      <created>1764508337711</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
+      <created>1764907516810</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
       <option name="project" value="LOCAL" />
-      <updated>1764508337711</updated>
+      <updated>1764907516810</updated>
     </task>
-    <task id="LOCAL-00007" summary="le puse lo proveedor api">
+    <task id="LOCAL-00068" summary="ClienteDetalleMapper.kt - Convierte entre entidad y modelo de dominio de ClienteDetalle">
       <option name="closed" value="true" />
-      <created>1764509628253</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
+      <created>1764907550308</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
       <option name="project" value="LOCAL" />
-      <updated>1764509628253</updated>
+      <updated>1764907550308</updated>
     </task>
-    <task id="LOCAL-00008" summary="le puse lo proveedor api">
+    <task id="LOCAL-00069" summary="ClienteDetalleRepository.kt - Repositorio para gestionar lógica de negocio de ClienteDetalle">
       <option name="closed" value="true" />
-      <created>1764513473846</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
+      <created>1764907568913</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
       <option name="project" value="LOCAL" />
-      <updated>1764513473846</updated>
+      <updated>1764907568913</updated>
     </task>
-    <task id="LOCAL-00009" summary="le puse lo proveedor api">
+    <task id="LOCAL-00070" summary="ClienteRepository.kt - Repositorio principal de Cliente">
       <option name="closed" value="true" />
-      <created>1764516476699</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
+      <created>1764907629963</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
       <option name="project" value="LOCAL" />
-      <updated>1764516476699</updated>
+      <updated>1764907629963</updated>
     </task>
-    <task id="LOCAL-00010" summary="basura">
+    <task id="LOCAL-00071" summary="ClienteListScreen.kt - Pantalla con listado de clientes">
       <option name="closed" value="true" />
-      <created>1764788295427</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
+      <created>1764907659941</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
       <option name="project" value="LOCAL" />
-      <updated>1764788295427</updated>
+      <updated>1764907659941</updated>
     </task>
-    <task id="LOCAL-00011" summary="basura">
+    <task id="LOCAL-00072" summary="mejoras">
       <option name="closed" value="true" />
-      <created>1764788301859</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
+      <created>1764907690660</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
       <option name="project" value="LOCAL" />
-      <updated>1764788301860</updated>
+      <updated>1764907690660</updated>
     </task>
-    <task id="LOCAL-00012" summary="CompraViewModel.kt">
+    <task id="LOCAL-00073" summary="CompraDao.kt - DAO para operaciones de Compra">
       <option name="closed" value="true" />
-      <created>1764789172083</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
+      <created>1764907717235</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
       <option name="project" value="LOCAL" />
-      <updated>1764789172083</updated>
+      <updated>1764907717235</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00074" summary="CompraDetalleDao.kt - DAO para detalles de Compra">
+      <option name="closed" value="true" />
+      <created>1764907741967</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907741967</updated>
+    </task>
+    <task id="LOCAL-00075" summary="CompraDetalleEntity.kt - Entidad de detalles de Compra">
+      <option name="closed" value="true" />
+      <created>1764907767024</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907767024</updated>
+    </task>
+    <task id="LOCAL-00076" summary=" Mapper de Compra">
+      <option name="closed" value="true" />
+      <created>1764907811314</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907811314</updated>
+    </task>
+    <task id="LOCAL-00077" summary="Mapper de CompraDetalle">
+      <option name="closed" value="true" />
+      <created>1764907862686</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907862686</updated>
+    </task>
+    <task id="LOCAL-00078" summary="- Repositorio de CompraDetalle">
+      <option name="closed" value="true" />
+      <created>1764907883849</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907883849</updated>
+    </task>
+    <task id="LOCAL-00079" summary="- Entidad principal de Compra">
+      <option name="closed" value="true" />
+      <created>1764907911191</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907911191</updated>
+    </task>
+    <task id="LOCAL-00080" summary=" Lista de compras">
+      <option name="closed" value="true" />
+      <created>1764907949719</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907949719</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Repositorio principal de Compra">
+      <option name="closed" value="true" />
+      <created>1764907964428</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907964428</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Pantalla de gestión de compras">
+      <option name="closed" value="true" />
+      <created>1764907986312</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1764907986313</updated>
+    </task>
+    <task id="LOCAL-00083" summary="mejoras de usuarios">
+      <option name="closed" value="true" />
+      <created>1764908048707</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908048707</updated>
+    </task>
+    <task id="LOCAL-00084" summary=" DAO para operaciones de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908071365</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908071366</updated>
+    </task>
+    <task id="LOCAL-00085" summary=" DAO para detalles de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908096556</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908096556</updated>
+    </task>
+    <task id="LOCAL-00086" summary=" Entidad de detalles de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908114616</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908114616</updated>
+    </task>
+    <task id="LOCAL-00087" summary=" Entidad principal de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908138185</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908138185</updated>
+    </task>
+    <task id="LOCAL-00088" summary=" Mapper de InsumoDetalle">
+      <option name="closed" value="true" />
+      <created>1764908168731</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908168731</updated>
+    </task>
+    <task id="LOCAL-00089" summary=" Repositorio de InsumoDetalle">
+      <option name="closed" value="true" />
+      <created>1764908185883</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908185883</updated>
+    </task>
+    <task id="LOCAL-00090" summary=" Lista de insumos">
+      <option name="closed" value="true" />
+      <created>1764908207072</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908207072</updated>
+    </task>
+    <task id="LOCAL-00091" summary=" Mapper de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908250859</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908250859</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Repositorio principal de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908267843</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908267843</updated>
+    </task>
+    <task id="LOCAL-00093" summary=" Pantalla de gestión de insumos">
+      <option name="closed" value="true" />
+      <created>1764908308382</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908308382</updated>
+    </task>
+    <task id="LOCAL-00094" summary=" Estado de UI para pantalla de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908329439</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908329439</updated>
+    </task>
+    <task id="LOCAL-00095" summary=" ViewModel de Insumo">
+      <option name="closed" value="true" />
+      <created>1764908350184</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908350184</updated>
+    </task>
+    <task id="LOCAL-00096" summary=" Pantalla de inicio de sesión">
+      <option name="closed" value="true" />
+      <created>1764908385674</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908385674</updated>
+    </task>
+    <task id="LOCAL-00097" summary=" Pantalla de menú principal">
+      <option name="closed" value="true" />
+      <created>1764908419432</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908419432</updated>
+    </task>
+    <task id="LOCAL-00098" summary=" Pantalla de perfil de usuario">
+      <option name="closed" value="true" />
+      <created>1764908451202</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908451202</updated>
+    </task>
+    <task id="LOCAL-00099" summary="DAO de Proveedor">
+      <option name="closed" value="true" />
+      <created>1764908489435</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908489435</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Entidad de Proveedor">
+      <option name="closed" value="true" />
+      <created>1764908505119</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908505119</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Lista de proveedores">
+      <option name="closed" value="true" />
+      <created>1764908534070</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908534070</updated>
+    </task>
+    <task id="LOCAL-00102" summary="Mapper de Proveedor">
+      <option name="closed" value="true" />
+      <created>1764908551070</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908551070</updated>
+    </task>
+    <task id="LOCAL-00103" summary="Repositorio de Proveedor">
+      <option name="closed" value="true" />
+      <created>1764908567029</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908567029</updated>
+    </task>
+    <task id="LOCAL-00104" summary="Pantalla de gestión de proveedores">
+      <option name="closed" value="true" />
+      <created>1764908589912</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908589912</updated>
+    </task>
+    <task id="LOCAL-00105" summary="Configuración de la base de datos principal">
+      <option name="closed" value="true" />
+      <created>1764908615082</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908615082</updated>
+    </task>
+    <task id="LOCAL-00106" summary="DAO de Reclamo">
+      <option name="closed" value="true" />
+      <created>1764908630840</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908630840</updated>
+    </task>
+    <task id="LOCAL-00107" summary="DAO de Reclamo">
+      <option name="closed" value="true" />
+      <created>1764908663891</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908663891</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Repositorio de Reclamo">
+      <option name="closed" value="true" />
+      <created>1764908688288</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908688288</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Pantalla de reclamos">
+      <option name="closed" value="true" />
+      <created>1764908715073</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908715073</updated>
+    </task>
+    <task id="LOCAL-00110" summary="ViewModel de Reclamo">
+      <option name="closed" value="true" />
+      <created>1764908738920</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1764908738920</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -306,12 +610,32 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="REDY EL LOGIN" />
-    <MESSAGE value="redy" />
-    <MESSAGE value="le puse lo proveedor api" />
-    <MESSAGE value="basura" />
-    <MESSAGE value="CompraViewModel.kt" />
-    <option name="LAST_COMMIT_MESSAGE" value="CompraViewModel.kt" />
+    <MESSAGE value=" DAO para detalles de Insumo" />
+    <MESSAGE value=" Entidad de detalles de Insumo" />
+    <MESSAGE value=" Entidad principal de Insumo" />
+    <MESSAGE value=" Mapper de InsumoDetalle" />
+    <MESSAGE value=" Repositorio de InsumoDetalle" />
+    <MESSAGE value=" Lista de insumos" />
+    <MESSAGE value=" Mapper de Insumo" />
+    <MESSAGE value="Repositorio principal de Insumo" />
+    <MESSAGE value=" Pantalla de gestión de insumos" />
+    <MESSAGE value=" Estado de UI para pantalla de Insumo" />
+    <MESSAGE value=" ViewModel de Insumo" />
+    <MESSAGE value=" Pantalla de inicio de sesión" />
+    <MESSAGE value=" Pantalla de menú principal" />
+    <MESSAGE value=" Pantalla de perfil de usuario" />
+    <MESSAGE value="DAO de Proveedor" />
+    <MESSAGE value="Entidad de Proveedor" />
+    <MESSAGE value="Lista de proveedores" />
+    <MESSAGE value="Mapper de Proveedor" />
+    <MESSAGE value="Repositorio de Proveedor" />
+    <MESSAGE value="Pantalla de gestión de proveedores" />
+    <MESSAGE value="Configuración de la base de datos principal" />
+    <MESSAGE value="DAO de Reclamo" />
+    <MESSAGE value="Repositorio de Reclamo" />
+    <MESSAGE value="Pantalla de reclamos" />
+    <MESSAGE value="ViewModel de Reclamo" />
+    <option name="LAST_COMMIT_MESSAGE" value="ViewModel de Reclamo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -332,12 +656,12 @@
       <map>
         <entry key="edu.ucne.proyecto_final">
           <value>
-            <CheckInfo lastCheckTimestamp="1763557780261" />
+            <CheckInfo lastCheckTimestamp="1764824015192" />
           </value>
         </entry>
         <entry key="edu.ucne.proyecto_final.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1763557780261" />
+            <CheckInfo lastCheckTimestamp="1764824015192" />
           </value>
         </entry>
       </map>
