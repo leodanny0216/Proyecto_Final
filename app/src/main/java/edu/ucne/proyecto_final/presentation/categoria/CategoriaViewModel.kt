@@ -21,17 +21,11 @@ class CategoriaViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CategoriaUiState())
     val uiState: StateFlow<CategoriaUiState> = _uiState.asStateFlow()
 
-    private val _categoriasState = MutableStateFlow<Resource<List<CategoriaDto>>>(Resource.Loading())
-    val categoriasState: StateFlow<Resource<List<CategoriaDto>>> = _categoriasState.asStateFlow()
-
-    init {
-        loadCategorias()
-    }
+    init { loadCategorias() }
 
     fun loadCategorias() {
         viewModelScope.launch {
             repository.getCategorias().collect { resource ->
-                _categoriasState.value = resource
                 when (resource) {
                     is Resource.Success -> _uiState.update {
                         it.copy(
@@ -147,13 +141,8 @@ class CategoriaViewModel @Inject constructor(
         }
     }
 
-    fun setNombre(nombre: String) {
-        _uiState.update { it.copy(nombre = nombre, errorMessage = null) }
-    }
-
-    fun setDescripcion(descripcion: String) {
-        _uiState.update { it.copy(descripcion = descripcion, errorMessage = null) }
-    }
+    fun setNombre(nombre: String) = _uiState.update { it.copy(nombre = nombre, errorMessage = null) }
+    fun setDescripcion(descripcion: String) = _uiState.update { it.copy(descripcion = descripcion, errorMessage = null) }
 
     fun setCategoriaForEdit(categoria: CategoriaDto) {
         _uiState.update {
@@ -180,18 +169,13 @@ class CategoriaViewModel @Inject constructor(
     }
 
     fun setSearchQuery(query: String) {
-        val filtradas = if (query.isBlank()) {
-            _uiState.value.categorias
-        } else {
-            _uiState.value.categorias.filter {
-                it.nombre.contains(query, ignoreCase = true) ||
-                        it.categoriaId.toString().contains(query)
-            }
+        val filtradas = if (query.isBlank()) _uiState.value.categorias
+        else _uiState.value.categorias.filter {
+            it.nombre.contains(query, ignoreCase = true) ||
+                    it.categoriaId.toString().contains(query)
         }
         _uiState.update { it.copy(searchQuery = query, categoriasFiltradas = filtradas) }
     }
 
-    fun clearMessages() {
-        _uiState.update { it.copy(successMessage = null, errorMessage = null) }
-    }
+    fun clearMessages() = _uiState.update { it.copy(successMessage = null, errorMessage = null) }
 }
