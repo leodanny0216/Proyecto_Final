@@ -103,6 +103,16 @@ fun AppNavigation() {
                 onNavigateBack = { navController.navigateUp() }
             )
         }
+        composable<Screen.CategoriaScreen> {
+            CategoriaScreen()
+        }
+        composable<Screen.CategoriaListScreen> {
+            CategoriaListScreen(
+                onEditCategoria = { categoriaId ->
+                    navController.navigate("EditarCategoria/$categoriaId")
+                }
+            )
+        }
 
         composable<Screen.UsuariosScreen> {
             val usuarioViewModel: UsuarioViewModel = hiltViewModel()
