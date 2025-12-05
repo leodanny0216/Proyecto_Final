@@ -1,16 +1,21 @@
 package edu.ucne.proyecto_final.presentation.insumo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
 
 data class CategoriaSimple(val id: Int, val nombre: String)
 data class ProveedorSimple(val id: Int, val nombre: String)
@@ -20,13 +25,14 @@ data class ProveedorSimple(val id: Int, val nombre: String)
 fun InsumoScreen(
     viewModel: InsumoViewModel = hiltViewModel(),
     insumoId: Int = 0,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     categorias: List<CategoriaSimple> = emptyList(),
     proveedores: List<ProveedorSimple> = emptyList()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showCategoriaDialog by remember { mutableStateOf(false) }
     var showProveedorDialog by remember { mutableStateOf(false) }
+    val greenColor = Color(0xFF4CAF50)
 
     LaunchedEffect(insumoId) {
         if (insumoId > 0) {
@@ -41,16 +47,17 @@ fun InsumoScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(if (uiState.insumoId == 0) "Nuevo Insumo" else "Editar Insumo")
+                    Text(
+                        if (uiState.insumoId == 0) "Nuevo Insumo" else "Editar Insumo",
+                        color = Color.White
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = greenColor)
             )
         }
     ) { paddingValues ->
@@ -58,28 +65,25 @@ fun InsumoScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(16.dp),
+                .padding(16.dp)
+                .background(Color(0xFFF5F5F5)),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // ================== Mensajes ==================
             item {
                 uiState.errorMessage?.let { error ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
-                        )
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE)),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                Icons.Default.Warning,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.error
-                            )
+                            Icon(Icons.Default.Warning, contentDescription = null, tint = Color.Red)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = error, color = MaterialTheme.colorScheme.error)
+                            Text(text = error, color = Color.Red)
                         }
                     }
                 }
@@ -89,67 +93,64 @@ fun InsumoScreen(
                 uiState.successMessage?.let { message ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        )
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = greenColor)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = message)
+                            Text(text = message, color = greenColor)
                         }
                     }
                     LaunchedEffect(Unit) {
-                        kotlinx.coroutines.delay(2000)
+                        delay(2000)
                         onNavigateBack()
                     }
                 }
             }
 
+            // ================== Campos principales ==================
             item {
                 OutlinedTextField(
                     value = uiState.nombre,
                     onValueChange = { viewModel.setNombre(it) },
                     label = { Text("Nombre del Insumo") },
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.Build, contentDescription = null) },
-                    singleLine = true
+                    leadingIcon = { Icon(Icons.Default.Build, contentDescription = null, tint = greenColor) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = greenColor,
+                        unfocusedBorderColor = greenColor.copy(alpha = 0.5f),
+                        cursorColor = greenColor,
+                        focusedLabelColor = greenColor
+                    )
                 )
             }
 
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Categoría",
+                            "Categoría",
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = greenColor
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
                             onClick = { showCategoriaDialog = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = greenColor)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (uiState.categoriaNombre.isNotEmpty())
-                                    uiState.categoriaNombre
-                                else
-                                    "Seleccionar categoría"
-                            )
+                            Text(if (uiState.categoriaNombre.isNotEmpty()) uiState.categoriaNombre else "Seleccionar categoría")
                         }
                     }
                 }
@@ -158,29 +159,24 @@ fun InsumoScreen(
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
-                            text = "Proveedor",
+                            "Proveedor",
                             style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            color = greenColor
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
                             onClick = { showProveedorDialog = true },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Icon(Icons.Default.AccountBox, contentDescription = null)
+                            Icon(Icons.Default.AccountBox, contentDescription = null, tint = greenColor)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = if (uiState.proveedorNombre.isNotEmpty())
-                                    uiState.proveedorNombre
-                                else
-                                    "Seleccionar proveedor"
-                            )
+                            Text(if (uiState.proveedorNombre.isNotEmpty()) uiState.proveedorNombre else "Seleccionar proveedor")
                         }
                     }
                 }
@@ -189,56 +185,108 @@ fun InsumoScreen(
             item {
                 OutlinedTextField(
                     value = if (uiState.stockInicial == 0) "" else uiState.stockInicial.toString(),
-                    onValueChange = {
-                        val stock = it.toIntOrNull() ?: 0
-                        viewModel.setStockInicial(stock)
-                    },
+                    onValueChange = { viewModel.setStockInicial(it.toIntOrNull() ?: 0) },
                     label = { Text("Stock Inicial") },
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = { Icon(Icons.Default.Info, contentDescription = null) },
-                    singleLine = true
+                    leadingIcon = { Icon(Icons.Default.Info, contentDescription = null, tint = greenColor) },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = greenColor,
+                        unfocusedBorderColor = greenColor.copy(alpha = 0.5f),
+                        cursorColor = greenColor,
+                        focusedLabelColor = greenColor
+                    )
                 )
             }
 
+            // ================== DETALLES ==================
             item {
-                Row(
+                Card(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            "Detalles del Insumo",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = greenColor
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        uiState.detalles.forEach { detalle ->
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F8E9)),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column {
+                                        Text("Nombre: ${detalle.nombre}", fontWeight = FontWeight.Bold)
+                                        Text("Cantidad: ${detalle.cantidad}")
+                                        Text("Precio Unidad: ${detalle.precioUnidad}")
+                                    }
+                                    IconButton(onClick = { viewModel.removeDetalle(detalle.insumoDetalleId) }) {
+                                        Icon(Icons.Default.Warning, contentDescription = "Eliminar", tint = Color.Red)
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = {
+                                val nuevoDetalle = viewModel.createDetalleTemporal()
+                                viewModel.addDetalle(nuevoDetalle)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Agregar Detalle")
+                        }
+                    }
+                }
+            }
+
+
+
+            // ================== Botones Guardar/Cancelar ==================
+            item {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedButton(
-                        onClick = {
-                            viewModel.clearForm()
-                            onNavigateBack()
-                        },
+                        onClick = { viewModel.clearForm(); onNavigateBack() },
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Cancelar")
+                        Text("Cancelar", color = greenColor)
                     }
-
                     Button(
                         onClick = {
-                            if (uiState.insumoId == 0) {
-                                viewModel.createInsumo()
-                            } else {
-                                viewModel.updateInsumo()
-                            }
+                            if (uiState.insumoId == 0) viewModel.createInsumo() else viewModel.updateInsumo()
                         },
                         modifier = Modifier.weight(1f),
-                        enabled = !uiState.isCreating && !uiState.isUpdating
+                        enabled = !uiState.isCreating && !uiState.isUpdating,
+                        colors = ButtonDefaults.buttonColors(containerColor = greenColor)
                     ) {
                         if (uiState.isCreating || uiState.isUpdating) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
+                            CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.White)
                         } else {
-                            Text(if (uiState.insumoId == 0) "Guardar" else "Actualizar")
+                            Text(if (uiState.insumoId == 0) "Guardar" else "Actualizar", color = Color.White)
                         }
                     }
                 }
             }
         }
     }
+
+    // ================== Dialogos ==================
     if (showCategoriaDialog) {
         AlertDialog(
             onDismissRequest = { showCategoriaDialog = false },
@@ -248,24 +296,14 @@ fun InsumoScreen(
                     items(categorias.size) { index ->
                         val categoria = categorias[index]
                         TextButton(
-                            onClick = {
-                                viewModel.setCategoria(categoria.id, categoria.nombre)
-                                showCategoriaDialog = false
-                            },
+                            onClick = { viewModel.setCategoria(categoria.id, categoria.nombre); showCategoriaDialog = false },
                             modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = categoria.nombre,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        ) { Text(categoria.nombre, modifier = Modifier.fillMaxWidth()) }
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showCategoriaDialog = false }) {
-                    Text("Cerrar")
-                }
+                TextButton(onClick = { showCategoriaDialog = false }) { Text("Cerrar") }
             }
         )
     }
@@ -279,25 +317,27 @@ fun InsumoScreen(
                     items(proveedores.size) { index ->
                         val proveedor = proveedores[index]
                         TextButton(
-                            onClick = {
-                                viewModel.setProveedor(proveedor.id, proveedor.nombre)
-                                showProveedorDialog = false
-                            },
+                            onClick = { viewModel.setProveedor(proveedor.id, proveedor.nombre); showProveedorDialog = false },
                             modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = proveedor.nombre,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        ) { Text(proveedor.nombre, modifier = Modifier.fillMaxWidth()) }
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showProveedorDialog = false }) {
-                    Text("Cerrar")
-                }
+                TextButton(onClick = { showProveedorDialog = false }) { Text("Cerrar") }
             }
         )
     }
+}
+
+// ================== Preview ==================
+@Preview(showBackground = true)
+@Composable
+fun InsumoScreenPreview() {
+    val categorias = listOf(CategoriaSimple(1, "Categoría A"), CategoriaSimple(2, "Categoría B"))
+    val proveedores = listOf(ProveedorSimple(1, "Proveedor A"), ProveedorSimple(2, "Proveedor B"))
+    InsumoScreen(
+        categorias = categorias,
+        proveedores = proveedores
+    )
 }
