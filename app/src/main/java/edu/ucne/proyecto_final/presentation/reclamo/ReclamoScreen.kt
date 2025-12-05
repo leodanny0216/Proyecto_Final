@@ -1,20 +1,58 @@
-// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 data class TipoReclamoSimple(val id: Int, val nombre: String)
 
@@ -23,7 +61,7 @@ data class TipoReclamoSimple(val id: Int, val nombre: String)
 fun ReclamoScreen(
     viewModel: ReclamoViewModel = hiltViewModel(),
     reclamoId: Int = 0,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     tiposReclamo: List<TipoReclamoSimple> = listOf(
         TipoReclamoSimple(1, "Producto defectuoso"),
         TipoReclamoSimple(2, "Servicio deficiente"),
@@ -33,14 +71,12 @@ fun ReclamoScreen(
     )
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val greenColor = Color(0xFF4CAF50)
+
     var showTipoDialog by remember { mutableStateOf(false) }
     var nuevaEvidencia by remember { mutableStateOf("") }
     var showAddEvidenciaDialog by remember { mutableStateOf(false) }
-    var fechaManual by remember { mutableStateOf("") }
-
-    LaunchedEffect(uiState.fechaIncidente) {
-        fechaManual = uiState.fechaIncidente
-    }
+    var fechaManual by remember { mutableStateOf(uiState.fechaIncidente) }
 
     LaunchedEffect(reclamoId) {
         if (reclamoId > 0) {
@@ -55,16 +91,17 @@ fun ReclamoScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(if (uiState.reclamoId == 0) "Nuevo Reclamo" else "Editar Reclamo")
+                    Text(
+                        if (uiState.reclamoId == 0) "Nuevo Reclamo" else "Editar Reclamo",
+                        color = Color.White
+                    )
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Volver", tint = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = greenColor)
             )
         }
     ) { paddingValues ->
@@ -75,49 +112,41 @@ fun ReclamoScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Mensaje de error
             item {
                 uiState.errorMessage?.let { error ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer
-                        )
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE)),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                Icons.Default.Warning,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.error
-                            )
+                            Icon(Icons.Default.Warning, contentDescription = null, tint = Color.Red)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = error, color = MaterialTheme.colorScheme.error)
+                            Text(text = error, color = Color.Red)
                         }
                     }
                 }
             }
 
+            // Mensaje de éxito
             item {
                 uiState.successMessage?.let { message ->
                     Card(
                         modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        )
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
+                        shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
                             modifier = Modifier.padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = greenColor)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(text = message)
+                            Text(text = message, color = greenColor)
                         }
                     }
                     LaunchedEffect(Unit) {
@@ -127,12 +156,12 @@ fun ReclamoScreen(
                 }
             }
 
+            // Selección de tipo de reclamo
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F8E9)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
@@ -143,7 +172,10 @@ fun ReclamoScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         OutlinedButton(
                             onClick = { showTipoDialog = true },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = greenColor
+                            )
                         ) {
                             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
                             Spacer(modifier = Modifier.width(8.dp))
@@ -158,12 +190,12 @@ fun ReclamoScreen(
                 }
             }
 
+            // Fecha del incidente
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F8E9)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
@@ -176,45 +208,35 @@ fun ReclamoScreen(
                             value = fechaManual,
                             onValueChange = {
                                 fechaManual = it
-                                // Actualizar el ViewModel cuando el usuario termina de editar
                                 viewModel.setFechaIncidente(it)
                             },
                             label = { Text("YYYY-MM-DD") },
-                            modifier = Modifier.fillMaxWidth(),
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Default.DateRange,
-                                    contentDescription = "Fecha"
-                                )
-                            },
+                            leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = "Fecha") },
                             placeholder = { Text("Ej: 2023-12-31") },
                             singleLine = true,
                             supportingText = {
                                 if (fechaManual.isNotEmpty()) {
                                     Text(
                                         text = if (esFechaValida(fechaManual))
-                                            "Fecha válida"
-                                        else
-                                            "Formato debe ser YYYY-MM-DD",
-                                        color = if (esFechaValida(fechaManual))
-                                            MaterialTheme.colorScheme.primary
-                                        else
-                                            MaterialTheme.colorScheme.error
+                                            "Fecha válida" else "Formato debe ser YYYY-MM-DD",
+                                        color = if (esFechaValida(fechaManual)) greenColor else Color.Red
                                     )
                                 }
                             },
                             isError = fechaManual.isNotEmpty() && !esFechaValida(fechaManual)
+
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
                             text = "Ingrese la fecha en formato YYYY-MM-DD",
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Gray
                         )
                     }
                 }
             }
 
+            // Descripción
             item {
                 Column {
                     OutlinedTextField(
@@ -230,20 +252,17 @@ fun ReclamoScreen(
                     Text(
                         text = "${uiState.descripcion.length} caracteres (mínimo 10)",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if (uiState.descripcion.length >= 10)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.error
+                        color = if (uiState.descripcion.length >= 10) greenColor else Color.Red
                     )
                 }
             }
 
+            // Evidencias
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F8E9)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -257,7 +276,7 @@ fun ReclamoScreen(
                                 fontWeight = FontWeight.Bold
                             )
                             IconButton(onClick = { showAddEvidenciaDialog = true }) {
-                                Icon(Icons.Default.Add, contentDescription = "Agregar evidencia")
+                                Icon(Icons.Default.Add, contentDescription = "Agregar evidencia", tint = greenColor)
                             }
                         }
 
@@ -265,7 +284,7 @@ fun ReclamoScreen(
                             Text(
                                 text = "No hay evidencias agregadas",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = Color.Gray
                             )
                         } else {
                             Column {
@@ -274,9 +293,8 @@ fun ReclamoScreen(
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(vertical = 4.dp),
-                                        colors = CardDefaults.cardColors(
-                                            containerColor = MaterialTheme.colorScheme.surface
-                                        )
+                                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                                        shape = RoundedCornerShape(8.dp)
                                     ) {
                                         Row(
                                             modifier = Modifier
@@ -284,11 +302,7 @@ fun ReclamoScreen(
                                                 .padding(8.dp),
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {
-                                            Icon(
-                                                Icons.Default.Send,
-                                                contentDescription = null,
-                                                modifier = Modifier.size(20.dp)
-                                            )
+                                            Icon(Icons.Default.Send, contentDescription = null, modifier = Modifier.size(20.dp), tint = greenColor)
                                             Spacer(modifier = Modifier.width(8.dp))
                                             Text(
                                                 text = evidencia,
@@ -300,11 +314,7 @@ fun ReclamoScreen(
                                                 onClick = { viewModel.removeEvidencia(index) },
                                                 modifier = Modifier.size(24.dp)
                                             ) {
-                                                Icon(
-                                                    Icons.Default.Delete,
-                                                    contentDescription = "Eliminar",
-                                                    tint = MaterialTheme.colorScheme.error
-                                                )
+                                                Icon(Icons.Default.Delete, contentDescription = "Eliminar", tint = Color.Red)
                                             }
                                         }
                                     }
@@ -315,6 +325,7 @@ fun ReclamoScreen(
                 }
             }
 
+            // Botones
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -326,18 +337,17 @@ fun ReclamoScreen(
                             fechaManual = ""
                             onNavigateBack()
                         },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = greenColor)
                     ) {
                         Text("Cancelar")
                     }
 
                     Button(
                         onClick = {
-                            // Primero asegurar que la fecha se guardó del campo manual
                             if (fechaManual.isNotEmpty() && esFechaValida(fechaManual)) {
                                 viewModel.setFechaIncidente(fechaManual)
                             }
-
                             if (uiState.reclamoId == 0) {
                                 viewModel.createReclamo()
                             } else {
@@ -349,15 +359,16 @@ fun ReclamoScreen(
                                 uiState.descripcion.length >= 10 &&
                                 uiState.tipoReclamoId > 0 &&
                                 fechaManual.isNotEmpty() &&
-                                esFechaValida(fechaManual)
+                                esFechaValida(fechaManual),
+                        colors = ButtonDefaults.buttonColors(containerColor = greenColor)
                     ) {
                         if (uiState.isCreating || uiState.isUpdating) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(20.dp),
-                                color = MaterialTheme.colorScheme.onPrimary
+                                color = Color.White
                             )
                         } else {
-                            Text(if (uiState.reclamoId == 0) "Guardar" else "Actualizar")
+                            Text(if (uiState.reclamoId == 0) "Guardar" else "Actualizar", color = Color.White)
                         }
                     }
                 }
@@ -365,6 +376,7 @@ fun ReclamoScreen(
         }
     }
 
+    // Diálogos
     if (showTipoDialog) {
         AlertDialog(
             onDismissRequest = { showTipoDialog = false },
@@ -380,34 +392,32 @@ fun ReclamoScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(text = tipo.nombre)
+                            Text(text = tipo.nombre, color = greenColor)
                         }
                     }
                 }
             },
             confirmButton = {
                 TextButton(onClick = { showTipoDialog = false }) {
-                    Text("Cerrar")
+                    Text("Cerrar", color = greenColor)
                 }
             }
         )
     }
 
-    // Diálogo para agregar evidencia
     if (showAddEvidenciaDialog) {
         AlertDialog(
             onDismissRequest = { showAddEvidenciaDialog = false },
             title = { Text("Agregar Evidencia") },
             text = {
-                Column {
-                    OutlinedTextField(
-                        value = nuevaEvidencia,
-                        onValueChange = { nuevaEvidencia = it },
-                        label = { Text("URL de la evidencia") },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("https://example.com/evidencia.jpg") }
-                    )
-                }
+                OutlinedTextField(
+                    value = nuevaEvidencia,
+                    onValueChange = { nuevaEvidencia = it },
+                    label = { Text("URL de la evidencia") },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("https://example.com/evidencia.jpg") },
+
+                )
             },
             confirmButton = {
                 TextButton(
@@ -418,17 +428,13 @@ fun ReclamoScreen(
                             showAddEvidenciaDialog = false
                         }
                     }
-                ) {
-                    Text("Agregar")
-                }
+                ) { Text("Agregar", color = greenColor) }
             },
             dismissButton = {
                 TextButton(onClick = {
                     showAddEvidenciaDialog = false
                     nuevaEvidencia = ""
-                }) {
-                    Text("Cancelar")
-                }
+                }) { Text("Cancelar", color = greenColor) }
             }
         )
     }
@@ -436,21 +442,13 @@ fun ReclamoScreen(
 
 fun esFechaValida(fecha: String): Boolean {
     return try {
-        if (!Regex("^\\d{4}-\\d{2}-\\d{2}\$").matches(fecha)) {
-            return false
-        }
-
+        if (!Regex("^\\d{4}-\\d{2}-\\d{2}\$").matches(fecha)) return false
         val partes = fecha.split("-")
-        if (partes.size != 3) return false
-
         val anio = partes[0].toInt()
         val mes = partes[1].toInt()
         val dia = partes[2].toInt()
-
-        if (mes < 1 || mes > 12) return false
-        if (dia < 1 || dia > 31) return false
-        if (anio < 1900 || anio > 2100) return false
-
+        if (mes !in 1..12) return false
+        if (dia !in 1..31) return false
         when (mes) {
             2 -> {
                 val esBisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0)
@@ -462,4 +460,11 @@ fun esFechaValida(fecha: String): Boolean {
     } catch (e: Exception) {
         false
     }
+}
+
+// ================== PREVIEW ==================
+@Preview(showBackground = true)
+@Composable
+fun ReclamoScreenPreview() {
+    ReclamoScreen()
 }
