@@ -60,6 +60,37 @@ class InsumoViewModel @Inject constructor(
         }
     }
 
+    fun addDetalle(detalle: InsumoDetalleDto) {
+        val listaActual = _uiState.value.detalles.toMutableList()
+        listaActual.add(detalle)
+        _uiState.update { it.copy(detalles = listaActual) }
+    }
+
+    fun removeDetalle(detalleId: Int) {
+        val listaActual = _uiState.value.detalles.filter { it.insumoDetalleId != detalleId }
+        _uiState.update { it.copy(detalles = listaActual) }
+    }
+
+
+    // Crear un detalle temporal antes de agregar
+    fun createDetalleTemporal(): InsumoDetalleDto {
+        val detalleId = (_uiState.value.detalles.maxOfOrNull { it.insumoDetalleId } ?: 0) + 1
+        return InsumoDetalleDto(
+            insumoDetalleId = detalleId,
+            insumoId = _uiState.value.insumoId,
+            nombre = "Detalle $detalleId",
+            descripcion = "Descripción",
+            cantidad = 1,
+            precioUnidad = 100,
+            fechaAdquisicion = "2025-12-04",
+            proveedorId = _uiState.value.proveedorId,
+            proveedorNombre = _uiState.value.proveedorNombre,
+            categoriaId = _uiState.value.categoriaId,
+            categoriaNombre = _uiState.value.categoriaNombre,
+            valorTotal = 100
+        )
+    }
+
     fun createInsumo() {
         val currentState = _uiState.value
 
