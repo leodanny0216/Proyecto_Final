@@ -32,6 +32,9 @@ sealed class Screen {
     // Categorías
     @Serializable
     data object CategoriaScreen : Screen()
+    @Serializable
+    data object CategoriaListScreen : Screen()
+
 
     // Clientes
     @Serializable
