@@ -1,7 +1,8 @@
 package edu.ucne.proyecto_final.presentation.usuario
 
-
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -10,6 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -27,18 +31,13 @@ fun EditarUsuarioScreen(
     val uiState by viewModel.uiState.collectAsState()
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    // Cargar el usuario cuando se monta la pantalla
-    LaunchedEffect(usuarioId) {
-        viewModel.getUsuarioById(usuarioId)
-    }
+    LaunchedEffect(usuarioId) { viewModel.getUsuarioById(usuarioId) }
 
-    // Observar el estado de éxito para navegar
     LaunchedEffect(uiState.successMessage) {
-        if (uiState.successMessage != null) {
-            if (uiState.successMessage!!.contains("actualizado")) {
-                onUsuarioActualizado()
-            } else if (uiState.successMessage!!.contains("eliminado")) {
-                onEliminarUsuario()
+        uiState.successMessage?.let { msg ->
+            when {
+                msg.contains("actualizado") -> onUsuarioActualizado()
+                msg.contains("eliminado") -> onEliminarUsuario()
             }
         }
     }
@@ -46,12 +45,13 @@ fun EditarUsuarioScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Editar Usuario") },
+                title = { Text("Editar Usuario", color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = onCancelar) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Cancelar"
+                            contentDescription = "Cancelar",
+                            tint = Color.White
                         )
                     }
                 },
@@ -60,21 +60,33 @@ fun EditarUsuarioScreen(
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "Eliminar",
-                            tint = MaterialTheme.colorScheme.error
+                            tint = Color(0xFFD32F2F)
                         )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF4CAF50) // Verde principal
+                )
             )
         }
     ) { innerPadding ->
         Box(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
+                .padding(innerPadding)
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color(0xFFE8F5E9), // Verde muy suave
+                            Color.White
+                        )
+                    )
+                )
         ) {
             if (uiState.isLoadingUsuarios) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color(0xFF2E7D32)
                 )
             } else {
                 Column(
@@ -83,70 +95,83 @@ fun EditarUsuarioScreen(
                         .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    OutlinedTextField(
-                        value = uiState.userName,
-                        onValueChange = { viewModel.setUserName(it) },
-                        label = { Text("Nombre de usuario") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        enabled = !uiState.isUpdating
-                    )
-
-                    OutlinedTextField(
-                        value = uiState.password,
-                        onValueChange = { viewModel.setPassword(it) },
-                        label = { Text("Contraseña") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        enabled = !uiState.isUpdating,
-                        visualTransformation = if (uiState.passwordVisible) {
-                            VisualTransformation.None
-                        } else {
-                            PasswordVisualTransformation()
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = { viewModel.togglePasswordVisibility() }) {
-                                Icon(
-                                    imageVector = if (uiState.passwordVisible) {
-                                        Icons.Default.Lock
-                                    } else {
-                                        Icons.Default.Lock
-                                    },
-                                    contentDescription = if (uiState.passwordVisible) {
-                                        "Ocultar contraseña"
-                                    } else {
-                                        "Mostrar contraseña"
-                                    }
-                                )
-                            }
-                        }
-                    )
-
-                    uiState.errorMessage?.let { error ->
-                        Text(
-                            text = error,
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodySmall,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = { viewModel.updateUsuario() },
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(56.dp),
-                        enabled = !uiState.isUpdating
+                            .shadow(8.dp, RoundedCornerShape(20.dp)),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFFF1F8E9) // Verde muy claro/blanco
+                        )
                     ) {
-                        if (uiState.isUpdating) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                color = MaterialTheme.colorScheme.onPrimary
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(24.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = uiState.userName,
+                                onValueChange = { viewModel.setUserName(it) },
+                                label = { Text("Nombre de usuario") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                enabled = !uiState.isUpdating
                             )
-                        } else {
-                            Text("Actualizar Usuario")
+
+                            OutlinedTextField(
+                                value = uiState.password,
+                                onValueChange = { viewModel.setPassword(it) },
+                                label = { Text("Contraseña") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                enabled = !uiState.isUpdating,
+                                visualTransformation = if (uiState.passwordVisible) {
+                                    VisualTransformation.None
+                                } else {
+                                    PasswordVisualTransformation()
+                                },
+                                trailingIcon = {
+                                    IconButton(onClick = { viewModel.togglePasswordVisibility() }) {
+                                        Icon(
+                                            imageVector = Icons.Default.Lock,
+                                            contentDescription = if (uiState.passwordVisible) "Ocultar contraseña" else "Mostrar contraseña",
+                                            tint = Color(0xFF2E7D32)
+                                        )
+                                    }
+                                }
+                            )
+
+                            uiState.errorMessage?.let { error ->
+                                Text(
+                                    text = error,
+                                    color = Color(0xFFD32F2F),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(vertical = 8.dp)
+                                )
+                            }
+
+                            Button(
+                                onClick = { viewModel.updateUsuario() },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFF4CAF50),
+                                    contentColor = Color.White
+                                ),
+                                enabled = !uiState.isUpdating
+                            ) {
+                                if (uiState.isUpdating) {
+                                    CircularProgressIndicator(
+                                        modifier = Modifier.size(20.dp),
+                                        color = Color.White
+                                    )
+                                } else {
+                                    Text("Actualizar Usuario")
+                                }
+                            }
                         }
                     }
                 }
@@ -168,7 +193,7 @@ fun EditarUsuarioScreen(
                         viewModel.deleteUsuario(usuarioId)
                     },
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.error
+                        contentColor = Color(0xFFD32F2F)
                     )
                 ) {
                     Text("Eliminar")
