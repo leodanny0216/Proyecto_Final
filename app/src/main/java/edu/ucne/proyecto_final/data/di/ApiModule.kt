@@ -6,18 +6,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.proyecto_final.data.remote.dto.*
 import edu.ucne.proyecto_final.data.remote.usuario.UsuarioApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import javax.net.ssl.SSLContext
-import javax.net.ssl.X509TrustManager
 
 @InstallIn(SingletonComponent::class)
 @Module
