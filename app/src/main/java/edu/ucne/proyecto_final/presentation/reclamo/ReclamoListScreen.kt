@@ -1,46 +1,49 @@
-// package edu.ucne.proyecto_final.presentation.reclamo
 package edu.ucne.proyecto_final.presentation.reclamo
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.ucne.proyecto_final.data.remote.dto.ReclamoDto
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReclamoListScreen(
     viewModel: ReclamoViewModel = hiltViewModel(),
-    onNavigateToReclamo: () -> Unit,
-    onEditReclamo: (Int) -> Unit
+    onNavigateToReclamo: () -> Unit = {},
+    onEditReclamo: (Int) -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showDeleteDialog by remember { mutableStateOf<ReclamoDto?>(null) }
+    val greenColor = Color(0xFF4CAF50)
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Reclamos") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
+                title = { Text("Lista de Reclamos", color = Color.White) },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = greenColor)
             )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = onNavigateToReclamo,
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = greenColor
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Nuevo Reclamo")
+                Icon(Icons.Default.Add, contentDescription = "Nuevo Reclamo", tint = Color.White)
             }
         }
     ) { paddingValues ->
@@ -49,82 +52,81 @@ fun ReclamoListScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp)
+                .background(Color(0xFFF5F5F5))
         ) {
             OutlinedTextField(
                 value = uiState.searchQuery,
                 onValueChange = { viewModel.setSearchQuery(it) },
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Buscar por descripción, tipo o fecha...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = greenColor) },
                 trailingIcon = {
                     if (uiState.searchQuery.isNotEmpty()) {
                         IconButton(onClick = { viewModel.setSearchQuery("") }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Limpiar")
+                            Icon(Icons.Default.Clear, contentDescription = "Limpiar", tint = greenColor)
                         }
                     }
                 },
-                singleLine = true
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = greenColor,
+                    unfocusedBorderColor = greenColor.copy(alpha = 0.5f),
+                    cursorColor = greenColor
+                )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Mensaje de error
             uiState.errorReclamos?.let { error ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.errorContainer
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFEBEE)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Row(
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            Icons.Default.Warning,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.error
-                        )
+                        Icon(Icons.Default.Warning, contentDescription = null, tint = Color.Red)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = error, color = MaterialTheme.colorScheme.error)
+                        Text(text = error, color = Color.Red)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
+            // Mensaje de éxito
             uiState.successMessage?.let { message ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFE8F5E9)),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
                     Row(
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            Icons.Default.CheckCircle,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
-                        )
+                        Icon(Icons.Default.CheckCircle, contentDescription = null, tint = greenColor)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = message)
+                        Text(text = message, color = greenColor)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 LaunchedEffect(Unit) {
-                    kotlinx.coroutines.delay(3000)
+                    delay(3000)
                     viewModel.clearMessages()
                 }
             }
 
+            // Lista de reclamos
             when {
                 uiState.isLoadingReclamos -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(color = greenColor)
                     }
                 }
                 uiState.reclamosFiltrados.isEmpty() -> {
@@ -133,12 +135,7 @@ fun ReclamoListScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Icon(
-                                Icons.Default.Warning,
-                                contentDescription = null,
-                                modifier = Modifier.size(64.dp),
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                            Icon(Icons.Default.Warning, contentDescription = null, modifier = Modifier.size(64.dp), tint = greenColor)
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(
                                 text = if (uiState.searchQuery.isBlank())
@@ -167,27 +164,22 @@ fun ReclamoListScreen(
         }
     }
 
+    // Diálogo de confirmación de eliminación
     showDeleteDialog?.let { reclamo ->
         AlertDialog(
             onDismissRequest = { showDeleteDialog = null },
             title = { Text("Confirmar eliminación") },
-            text = {
-                Text("¿Está seguro de que desea eliminar el reclamo?")
-            },
+            text = { Text("¿Está seguro de que desea eliminar el reclamo?") },
             confirmButton = {
                 TextButton(
                     onClick = {
                         viewModel.deleteReclamo(reclamo.reclamoId)
                         showDeleteDialog = null
                     }
-                ) {
-                    Text("Eliminar")
-                }
+                ) { Text("Eliminar", color = greenColor) }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = null }) {
-                    Text("Cancelar")
-                }
+                TextButton(onClick = { showDeleteDialog = null }) { Text("Cancelar", color = greenColor) }
             }
         )
     }
@@ -199,17 +191,15 @@ fun ReclamoItem(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
+    val greenColor = Color(0xFF4CAF50)
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onEdit),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -225,7 +215,7 @@ fun ReclamoItem(
                     Text(
                         text = "Fecha: ${reclamo.fechaIncidente}",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = Color.Gray
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
@@ -238,28 +228,26 @@ fun ReclamoItem(
                         Text(
                             text = "Evidencias: ${reclamo.evidencias.size}",
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
+                            color = greenColor
                         )
                     }
                 }
-
                 Row {
                     IconButton(onClick = onEdit) {
-                        Icon(
-                            Icons.Default.Edit,
-                            contentDescription = "Editar",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
+                        Icon(Icons.Default.Edit, contentDescription = "Editar", tint = greenColor)
                     }
                     IconButton(onClick = onDelete) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Eliminar",
-                            tint = MaterialTheme.colorScheme.error
-                        )
+                        Icon(Icons.Default.Delete, contentDescription = "Eliminar", tint = Color.Red)
                     }
                 }
             }
         }
     }
+}
+
+// ================== PREVIEW ==================
+@Preview(showBackground = true)
+@Composable
+fun ReclamoListScreenPreview() {
+    ReclamoListScreen()
 }
